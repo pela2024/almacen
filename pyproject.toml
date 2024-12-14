@@ -16,3 +16,6 @@ quote-style ="single"
 [tool.ruff.Lint]
 ignore = ["F401"]
 extend-select = ["F","I", "N", "A"]
+
+[tool.uv.workspace]
+members = ["src"]
