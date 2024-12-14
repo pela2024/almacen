@@ -5,14 +5,16 @@ from .models import Comision, Alumno, Curso
 
 @admin.register(Curso)
 class CursoAdmin(admin.ModelAdmin):
-    list_display = ("nombre")
+    list_display = ("nombre",)
+
+    
 
 @admin.register(Alumno)
 class AlumnoAdmin(admin.ModelAdmin):
-    list_display = ("comision", "dni")
+    list_display = ("Comision", "Dni")
 
 
 
 @admin.register(Comision)
 class ComisionAdmin(admin.ModelAdmin):
-    list_display = ("curos", "numero", "fecha_de_inicio")
+    list_display = ("Curso__nombre", "Numero", "Fecha_de_inicio")
