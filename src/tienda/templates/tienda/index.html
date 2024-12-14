@@ -1,5 +1,10 @@
 {% extends "tienda/base.html" %}
 
 {% block contenido %}
+    <main >
     <h1> Almacen de picadas</h1>  
+    <a href="{% url 'tienda:curso_list' %}"><button>Mostrar Cursos</button> </a>
+    <a href="{% url 'tienda:comision_list' %}"><button>Mostrar Comisiones</button> </a>
+    <a href="{% url 'tienda:alumno_list' %}"> <button>Mostrar Alumnos</button></a>
+</main>
 {% endblock contenido %}

@@ -1,0 +1,11 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+    <h1>Lista de comisiones</h1>
+    <a href="{% url 'tienda:comision_create' %}"><button>Crear Comision</button></a>
+    <ul>
+        {% for object in object_List %}
+           <p>{{object.curso}}- {{object.numero}}- {{object.fecha_de_inicio}}</p> 
+        {% endfor %}
+    </ul>
+{% endblock contenido %}

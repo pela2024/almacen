@@ -1,0 +1,11 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+    <h1>Lista de Alumnos</h1>
+    <a href="{% url 'tienda:alumno_create' %}"><button>Crear Alumnos</button></a>
+    <ul>
+        {% for object in object_List %}
+           <p>{{object.comision}}- {{object.dni}}</p> 
+        {% endfor %}
+    </ul>
+{% endblock contenido %}
