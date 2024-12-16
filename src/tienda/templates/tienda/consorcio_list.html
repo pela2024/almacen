@@ -1,11 +1,11 @@
 {% extends 'tienda/base.html' %}
 
 {% block contenido %}
-    <h1>Lista de Cursos</h1>
-    <a href="{% url 'tienda:curso_create' %}"><button>Crear Cursos</button></a>
+    <h1>Lista de consorcios</h1>
+    <a href="{% url 'tienda:consorcio_create' %}"><button>Agregar</button></a>
     <ul>
         {% for object in object_List %}
-           <p>{{object.nombre}}</p> 
+           <p>{{object.agregar}}</p> 
         {% endfor %}
     </ul>
 {% endblock contenido %}
