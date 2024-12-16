@@ -1,10 +1,10 @@
 from django import forms
 
-from .models import Curso, Comision, Alumno
+from .models import Consorcio, Comision, Alumno
 
-class CursoForm(forms.ModelForm):
+class ConsorcioForm(forms.ModelForm):
     class Meta:
-        model = Curso
+        model = Consorcio
         fields = "__all__" 
 
 class ComisionForm(forms.ModelForm):

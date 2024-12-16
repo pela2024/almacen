@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
-from .models import Curso, Alumno, Comision
-from .forms import CursoForm, ComisionForm, AlumnoForm
+from .models import Consorcio, Alumno, Comision
+from .forms import ConsorcioForm, ComisionForm, AlumnoForm
 # Create your views here.
 def index(request):
     return render(request, "tienda/index.html")
@@ -10,20 +10,20 @@ def about(request):
     return render(request, "tienda/about.html")
 
 
-def curso_list(request):
-    query = Curso.objects.all()
+def consorcio_list(request):
+    query = Consorcio.objects.all()
     context ={"object_list": query}
-    return render(request, "tienda/curso_list.html", context)
+    return render(request, "tienda/consorcio_list.html", context)
 
-def curso_create(request):
+def consorcio_create(request):
     if request.method =="GET":
-        form = CursoForm()
+        form = ConsorcioForm()
     if request.method == "POST":
-        form = CursoForm(request.POST)
+        form = ConsorcioForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("tienda:curso_list")   
-    return render(request, "tienda/curso_form.html", {"form": form})    
+            return redirect("tienda:consorcio_list")   
+    return render(request, "tienda/consorcio_form.html", {"form": form})    
 
 def comision_list(request):
     query = Comision.objects.all()
@@ -37,7 +37,7 @@ def Comision_create(request):
         form = ComisionForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("tienda:Comision_list")   
+            return redirect("tienda:comision_list")   
     return render(request, "tienda/comision_form.html", {"form": form})  
 
 def alumno_list(request):
@@ -52,5 +52,5 @@ def Alumno_create(request):
         form = AlumnoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("tienda:Alumno_list")   
-    return render(request, "tienda/Alumno_form.html", {"form": form})  
+            return redirect("tienda:alumno_list")   
+    return render(request, "tienda/alumno_form.html", {"form": form})  
