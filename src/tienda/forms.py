@@ -1,18 +1,18 @@
 from django import forms
 
-from .models import Consorcio, Comision, Alumno
+from .models import Consorcio, Liquidacion, Unidades
 
 class ConsorcioForm(forms.ModelForm):
     class Meta:
         model = Consorcio
         fields = "__all__" 
 
-class ComisionForm(forms.ModelForm):
+class LiquidacionForm(forms.ModelForm):
     class Meta:
-        model = Comision
+        model = Liquidacion
         fields = "__all__"         
 
-class AlumnoForm(forms.ModelForm):
+class UnidadesForm(forms.ModelForm):
     class Meta:
-        model = Alumno
+        model = Unidades
         fields = "__all__"           

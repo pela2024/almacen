@@ -1,0 +1,11 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+    <h1>Lista de Unidades</h1>
+    <a href="{% url 'tienda:unidades_create' %}"><button>Crear Unidades</button></a>
+    <ul>
+        {% for object in object_List %}
+           <p>{{object.liquidacion}}- {{object.piso}}- {{object.depto}}</p> 
+        {% endfor %}
+    </ul>
+{% endblock contenido %}

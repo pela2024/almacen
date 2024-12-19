@@ -1,0 +1,11 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+    <h1>Lista de Liquidaciones</h1>
+    <a href="{% url 'tienda:liquidacion_create' %}"><button>Crear Liquidaciones</button></a>
+    <ul>
+        {% for object in object_List %}
+           <p>{{object.consorcio}}- {{object.periodo}}- </p> 
+        {% endfor %}
+    </ul>
+{% endblock contenido %}

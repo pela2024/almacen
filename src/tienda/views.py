@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
-from .models import Consorcio, Alumno, Comision
-from .forms import ConsorcioForm, ComisionForm, AlumnoForm
+from .models import Consorcio, Unidades, Liquidacion
+from .forms import ConsorcioForm, LiquidacionForm, UnidadesForm
 # Create your views here.
 def index(request):
     return render(request, "tienda/index.html")
@@ -25,32 +25,32 @@ def consorcio_create(request):
             return redirect("tienda:consorcio_list")   
     return render(request, "tienda/consorcio_form.html", {"form": form})    
 
-def comision_list(request):
-    query = Comision.objects.all()
+def Liquidacion_list(request):
+    query = Liquidacion.objects.all()
     context ={"object_list": query}
-    return render(request, "tienda/comision_list.html", context)
+    return render(request, "tienda/Liquidacion_list.html", context)
 
-def Comision_create(request):
+def Liquidacion_create(request):
     if request.method =="GET":
-        form = ComisionForm()
+        form = LiquidacionForm()
     if request.method == "POST":
-        form = ComisionForm(request.POST)
+        form = LiquidacionForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("tienda:comision_list")   
-    return render(request, "tienda/comision_form.html", {"form": form})  
+            return redirect("tienda:liquidacion_list")   
+    return render(request, "tienda/liquidacion_form.html", {"form": form})  
 
-def alumno_list(request):
-    query = Alumno.objects.all()
+def Unidades_list(request):
+    query = Unidades.objects.all()
     context ={"object_list": query}
-    return render(request, "tienda/alumno_list.html", context)
+    return render(request, "tienda/unidades_list.html", context)
 
-def Alumno_create(request):
+def Unidades_create(request):
     if request.method =="GET":
-        form = AlumnoForm()
+        form = UnidadesForm()
     if request.method == "POST":
-        form = AlumnoForm(request.POST)
+        form = UnidadesForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("tienda:alumno_list")   
-    return render(request, "tienda/alumno_form.html", {"form": form})  
+            return redirect("tienda:unidades_list")   
+    return render(request, "tienda/unidades_form.html", {"form": form})  

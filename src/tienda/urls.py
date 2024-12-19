@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import index, about, consorcio_list, alumno_list, comision_list, consorcio_create, Alumno_create, Comision_create 
+from .views import index, about, consorcio_list, Unidades_list, Liquidacion_list, consorcio_create, Unidades_create, Liquidacion_create
 
 
 app_name = "tienda"
@@ -9,9 +9,9 @@ urlpatterns = [
     path("about/", about , name ="about"),
     path("consorcio/list/",consorcio_list  , name ="consorcio_list"),
     path("consorcio/create/",consorcio_create  , name ="consorcio_create"),
-    path("comision/list/",comision_list , name ="comision_list"),
-    path("comision/create/",Comision_create , name ="comision_create"),
-    path("alumno/list/", alumno_list , name ="alumno_list"),
-    path("alumno/create/", Alumno_create , name ="alumno_create"),
+    path("liquidacion/list/", Liquidacion_list , name ="liquidacion_list"),
+    path("liquidacion/create/",Liquidacion_create , name ="liquidacion_create"),
+    path("unidades/list/", Unidades_list , name ="unidades_list"),
+    path("unidades/create/",Unidades_create , name ="unidades_create"),
     
 ]
