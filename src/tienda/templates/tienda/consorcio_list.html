@@ -3,9 +3,10 @@
 {% block contenido %}
     <h1>Lista de consorcios</h1>
     <a href="{% url 'tienda:consorcio_create' %}"><button>Agregar</button></a>
+    <a href = "{% url "tienda:index" %}"> <h1> Inicio </h1> </a>
     <ul>
-        {% for object in object_List %}
-           <p>{{object.docmicilio}}</p> 
+        {% for object in object_list %}
+           <p>{{object.domicilio}}</p> 
         {% endfor %}
     </ul>
 {% endblock contenido %}

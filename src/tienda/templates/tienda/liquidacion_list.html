@@ -3,9 +3,10 @@
 {% block contenido %}
     <h1>Lista de Liquidaciones</h1>
     <a href="{% url 'tienda:liquidacion_create' %}"><button>Crear Liquidaciones</button></a>
+    <a href = "{% url "tienda:index" %}"> <h1> Inicio </h1> </a>
     <ul>
-        {% for object in object_List %}
-           <p>{{object.consorcio}}- {{object.periodo}}- </p> 
+        {% for object in object_list %}
+           <p>{{object.consorcio}}- {{object.periodo}} </p> 
         {% endfor %}
     </ul>
 {% endblock contenido %}

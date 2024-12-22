@@ -3,8 +3,9 @@
 {% block contenido %}
     <h1>Lista de Unidades</h1>
     <a href="{% url 'tienda:unidades_create' %}"><button>Crear Unidades</button></a>
+    <a href = "{% url "tienda:index" %}"> <h1> Inicio </h1> </a>
     <ul>
-        {% for object in object_List %}
+        {% for object in object_list %}
            <p>{{object.liquidacion}}- {{object.piso}}- {{object.depto}}</p> 
         {% endfor %}
     </ul>
