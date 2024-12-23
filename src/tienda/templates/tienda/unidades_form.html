@@ -5,6 +5,7 @@
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">Guardar</button>
+        <a href = "{% url "tienda:unidades_list" %}"><h1>Volver</h1></a>
 
     </form>
 {% endblock contenido %}
