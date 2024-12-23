@@ -1,12 +1,25 @@
-{% extends "tienda/base.html" %}
+{% extends 'tienda/base.html' %}
+{% load static %}
+
+
 
 {% block contenido %}
     <main >
-    <h1> Plataforma para administradores de consorcios</h1>  
+        <style>
+            body{
+                style = color: orange ; text-align: center;
+            }
+    
+        </style>
+        <body>
+            <h1>Bienvenidos a la plataforma <br> para administradores de consorcios </h1>
+          
+    </body>
     <a href="{% url 'tienda:consorcio_list' %}"><button>Mostrar Consorcios</button> </a>
     <a href="{% url 'tienda:liquidacion_list' %}"><button>Mostrar Liquidaciones</button> </a>
     <a href="{% url 'tienda:unidades_list' %}"> <button>Mostrar Unidades </button></a>
     <a href="{% url 'tienda:about' %}"> <button>Acerca de mi </button></a>
 
+    <img src="{% static "tienda/imagenes/edificio.jpg" %}" alt="" " style="width:60%;height:25%;">
 </main>
 {% endblock contenido %}
