@@ -18,3 +18,9 @@
 He usado django , creando 3 modelos
 
 ### Puntos a mejorar
+
+## se hizo crud en: 
+    consorcio_list.html
+    liquidaciones_list.html
+    unidades_list.html
+    incluyendo estilos CSS
