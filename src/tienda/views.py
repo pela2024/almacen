@@ -1,3 +1,4 @@
+from django.http import HttpRequest , HttpResponse
 from django.shortcuts import redirect, render
 
 from .models import Consorcio, Unidades, Liquidacion
@@ -10,12 +11,11 @@ def about(request):
     return render(request, "tienda/about.html")
 
 
-def consorcio_list(request):
-    query = Consorcio.objects.all()
-    context ={"object_list": query}
-    return render(request, "tienda/consorcio_list.html", context)
+def consorcio_list(request:HttpRequest)-> HttpResponse:
+    queryset = Consorcio.objects.all()
+    return render(request, "tienda/consorcio_list.html",{"object_list": queryset})
 
-def consorcio_create(request):
+def consorcio_create(request: HttpRequest)-> HttpResponse:
     if request.method =="GET":
         form = ConsorcioForm()
     if request.method == "POST":

@@ -4,9 +4,25 @@
     <h1>Lista de Liquidaciones</h1>
     <a href="{% url 'tienda:liquidacion_create' %}"><button>Crear Liquidaciones</button></a>
     <a href = "{% url "tienda:index" %}"> <h1> Inicio </h1> </a>
-    <ul>
-        {% for object in object_list %}
-           <p>{{object.consorcio}}- {{object.periodo}} </p> 
-        {% endfor %}
-    </ul>
+    
+    <table border="2"; style = "color: brown; text-align: justify;" >
+        <thead>
+            <tr>
+                <th style = "color:black; text-align: center;"> Liquidaciones </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consorcio  in object_list %}
+                <tr>
+                    <td>{{consorcio}}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td> No hay datos disponibles. </td>
+                </tr>
+            {% endfor %}
+    
+        </tbody>
+    </table>
+
 {% endblock contenido %}

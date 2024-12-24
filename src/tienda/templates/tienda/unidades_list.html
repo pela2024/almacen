@@ -4,9 +4,24 @@
     <h1>Lista de Unidades</h1>
     <a href="{% url 'tienda:unidades_create' %}"><button>Crear Unidades</button></a>
     <a href = "{% url "tienda:index" %}"> <h1> Inicio </h1> </a>
-    <ul>
-        {% for object in object_list %}
-           <p>{{object.liquidacion}}- {{object.piso}}- {{object.depto}}</p> 
-        {% endfor %}
-    </ul>
+    <table border="2"; style = "color: brown; text-align: justify;" >
+        <thead>
+            <tr>
+                <th style = "color:black; text-align: center;"> Unidades </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for liquidacion  in object_list %}
+                <tr>
+                    <td>{{liquidacion}}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td> No hay datos disponibles. </td>
+                </tr>
+            {% endfor %}
+    
+        </tbody>
+    </table>
+
 {% endblock contenido %}

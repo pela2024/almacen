@@ -2,12 +2,26 @@
 
 {% block contenido %}
     <h1>Lista de consorcios</h1>
-    <a href="{% url 'tienda:consorcio_create' %}"><button>Agregar</button></a>
-    <a href = "{% url "tienda:index" %}"> <h1> Inicio </h1> </a>
-    <ul>
-        {% for object in object_list %}
-           <p>{{object.domicilio}}</p> 
-        {% endfor %}
-    </ul>
+        <a href="{% url 'tienda:consorcio_create' %}"><button>Agregar</button></a>
+        <a href = "{% url "tienda:index" %}"> <h1> Inicio </h1> </a>
+    <table border="2"; style = "color: brown; text-align: justify;" >
+        <thead>
+            <tr>
+                <th style = "color:black; text-align: center;"> Consorcios </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for domicilio in object_list %}
+                <tr>
+                    <td>{{domicilio}}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td> No hay datos disponibles. </td>
+                </tr>
+            {% endfor %}
+    
+        </tbody>
+        </table>
 {% endblock contenido %}
 
