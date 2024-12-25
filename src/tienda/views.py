@@ -10,11 +10,12 @@ def index(request):
 def about(request):
     return render(request, "tienda/about.html")
 
-
+#### CONSORCIO - LIST VIEW 
 def consorcio_list(request:HttpRequest)-> HttpResponse:
     queryset = Consorcio.objects.all()
     return render(request, "tienda/consorcio_list.html",{"object_list": queryset})
 
+#### CONSORCIO - CREATE VIEW 
 def consorcio_create(request: HttpRequest)-> HttpResponse:
     if request.method =="GET":
         form = ConsorcioForm()
@@ -24,6 +25,21 @@ def consorcio_create(request: HttpRequest)-> HttpResponse:
             form.save()
             return redirect("tienda:consorcio_list")   
     return render(request, "tienda/consorcio_form.html", {"form": form})    
+
+
+
+#### CONSORCIO - UPDATE VIEW 
+def consorcio_update(request: HttpRequest, pk:int)-> HttpResponse:
+   query = consorcio.objects.get(id=pk)
+   if request.method =="GET":
+        form = ConsorcioForm(instance =query) 
+   if request.method == "POST":
+        form = ConsorcioForm(request.POST, instance=query)
+        if form.is_valid():
+            form.save()
+            return redirect("tienda:consorcio_list")   
+   return render(request, "tienda/consorcio_form.html", {"form": form})    
+
 
 def Liquidacion_list(request):
     query = Liquidacion.objects.all()
