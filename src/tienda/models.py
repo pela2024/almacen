@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Consorcio(models.Model):
     domicilio = models.CharField(max_length=255, unique=True)
 
@@ -22,4 +23,8 @@ class Unidades(models.Model):
 
     def __str__(self):
         return f"{self.liquidacion} - Piso: {self.piso}, Depto: {self.depto}"
+    class meta: 
+        unique_together =("liquidacion", "piso")
+        verbase_name =" unidad"
+        verbase_name_pluraL="unidades"
 
