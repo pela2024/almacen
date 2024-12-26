@@ -1,0 +1,16 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+    <form method="post">
+
+        <h1>Consorcio - Vista en detalle</h1>
+        {% csrf_token %}
+        {{form.as_p}}
+            <ul>
+                <li> <strong>domicilio</strong>{{object.domicilio}}</li>                    
+            </ul>
+
+           <a href = "{% url "tienda:consorcio_list" %}"><h1>Volver</h1></a>
+
+    </form>
+{% endblock contenido %}

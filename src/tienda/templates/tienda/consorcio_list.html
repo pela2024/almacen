@@ -8,15 +8,19 @@
         <thead>
             <tr>
                 <th style = "color:black; text-align: center;"> Consorcios </th>
-                <th style = "color:black; text-align: center;"> Acciones </th>
+                <th style = "color:black; text-align: center; "> Acciones </th>
             </tr>
         </thead>
         <tbody>
-            {% for domicilio in object_list %}
+            {% for domicilio  in object_list %}
                 <tr>
                     <td>{{domicilio}}</td>
+                    <td> <a href="{% url 'tienda:consorcio_detail' domicilio.id %}">
+                        <button>Ver</button>
                     <td> <a href="{% url 'tienda:consorcio_update' domicilio.id %}">
                         <button>Editar</button>
+                        <td> <a href="{% url 'tienda:consorcio_confirm_delete' domicilio.id %}">
+                            <button>Eliminar</button>
                     </a>
                     </td>
                 </tr>
