@@ -4,14 +4,9 @@ from django.contrib import admin
 from .models import Liquidacion, Unidades , Consorcio
 
 
-
-
-
 @admin.register(Consorcio)
 class ConsorcioAdmin(admin.ModelAdmin):
     list_display = ("domicilio",)
-
-    
 
 @admin.register(Unidades)
 class UnidadesAdmin(admin.ModelAdmin):
@@ -19,12 +14,6 @@ class UnidadesAdmin(admin.ModelAdmin):
     list_display_links=("piso",)
     list_filter=("liquidacion",)
     list_fields=("liquidacion",)
-
-
-
-
-
-
 
 @admin.register(Liquidacion)
 class LiquidacionAdmin(admin.ModelAdmin):

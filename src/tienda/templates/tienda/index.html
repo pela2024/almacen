@@ -11,11 +11,19 @@
             <h1>Bienvenidos a la plataforma <br> para administradores de consorcios </h1>
           
     </body>
-    <a href="{% url 'tienda:consorcio_list' %}"><button> Consorcios</button> </a>
-    <a href="{% url 'tienda:liquidacion_list' %}"><button> Liquidaciones</button> </a>
-    <a href="{% url 'tienda:unidades_list' %}"> <button> Unidades </button></a>
-    <a href="{% url 'tienda:about' %}"> <button>Acerca de mi </button></a>
+        <div>
+            <a href="{% url 'tienda:consorcio_list' %}"><button> Consorcios</button> </a>
+            <a href="{% url 'tienda:liquidacion_list' %}"><button> Liquidaciones</button> </a>
+            <a href="{% url 'tienda:unidades_list' %}"> <button> Unidades </button></a>
+            <a href="{% url 'tienda:about' %}"> <button>Acerca de mi </button></a>
+            <a href="{% url 'tienda:login' %}"> <button>Iniciar secion </button></a>
+        </div>
 
-    <img src="{% static "tienda/imagenes/edificio.jpg" %}" alt="" " style="width:60%;height:25%;">
+        {% for mesage in messages  %}
+        {{mesage}}
+        
+        {% endfor %}
+
+        <img src="{% static "tienda/imagenes/edificio.jpg" %}" alt="" " style="width:60%;height:25%;">
 </main>
 {% endblock contenido %}

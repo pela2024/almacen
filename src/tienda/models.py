@@ -7,13 +7,16 @@ class Consorcio(models.Model):
     def __str__(self):
         return self.domicilio
 
-
 class Liquidacion(models.Model):
     consorcio = models.ForeignKey(Consorcio, on_delete=models.SET_NULL, null=True)
-    periodo = models.CharField(max_length=255, unique=True)
+    periodo = models.CharField(max_length=255)
+
+    class Meta:
+        unique_together = ('consorcio', 'periodo')  # Restricción única compuesta
 
     def __str__(self):
         return f"{self.consorcio} - {self.periodo}"
+
 
 
 class Unidades(models.Model):

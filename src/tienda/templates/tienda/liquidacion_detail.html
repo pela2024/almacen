@@ -1,0 +1,16 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+    <form method="post">
+
+        <h1>Liquidaciones - Vista en detalle</h1>
+        {% csrf_token %}
+        {{form.as_p}}
+            <ul>
+                <li> <strong>domicilio: </strong>{{object.consorcio}}</li>                    
+            </ul>
+
+           <a href = "{% url "tienda:liquidacion_list" %}"><h1>Volver</h1></a>
+
+    </form>
+{% endblock contenido %}

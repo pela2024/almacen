@@ -3,26 +3,36 @@
 {% block contenido %}
     <h1>Lista de Liquidaciones</h1>
     <a href="{% url 'tienda:liquidacion_create' %}"><button>Crear Liquidaciones</button></a>
-    <a href = "{% url "tienda:index" %}"> <h1> Inicio </h1> </a>
+    <a href="{% url 'tienda:index' %}"><h1>Inicio</h1></a>
     
-    <table border="2"; style = "color: brown; text-align: justify;" >
+    <table border="2" style="color: brown; text-align: justify;">
         <thead>
             <tr>
-                <th style = "color:black; text-align: center;"> Liquidaciones </th>
+                <th style="color:black; text-align: center;">Liquidaciones</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            {% for consorcio  in object_list %}
+            {% if object_list %}
+                {% for consorcio in object_list %}
                 <tr>
-                    <td>{{consorcio}}</td>
+                    <td>{{ consorcio }}</td>
+                    <td>{{ consorcio.periodo }}</td>
+                    <td>
+                        <a href="{% url 'tienda:liquidacion_detail' consorcio.id %}">
+                            <button>Ver</button>
+                        </a>
+                        <a href="{% url 'tienda:liquidacion_update' consorcio.id %}">
+                            <button>Editar</button>
+                        </a>
+                    </td>
                 </tr>
-                {% empty %}
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td> No hay datos disponibles. </td>
+                    <td colspan="2">No hay datos disponibles.</td>
                 </tr>
-            {% endfor %}
-    
+            {% endif %}
         </tbody>
     </table>
-
 {% endblock contenido %}
