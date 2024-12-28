@@ -1,11 +1,15 @@
 {% extends 'tienda/base.html' %}
 
 {% block contenido %}
+    <h1>Inicio de secion</h1>
+    {% for message in messages  %}
+        {{message}}
+    {% endfor %}
     <form method="POST">  
         {% csrf_token %}
         {{form}}
         <button type="submit"> Iniciar secion</button>
     </form>
-        <p> No tienes una cuenta<a href="#"> Registrate aqui</a>
+        <p> No tienes una cuenta<a href="{% url 'tienda:register' %}"> Registrate aqui</a>
         </p>
 {% endblock contenido %}
