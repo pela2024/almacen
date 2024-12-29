@@ -9,7 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 from .models import  Unidades
 from .forms import   UnidadesForm
-from .forms import CustonAuthenticationForm , CustomUserCreationForm
+from .forms import CustomAuthenticationForm , CustomRegistroUsuarioForm
 # Create your views here.
 def index(request):
     return render(request, "tienda/index.html")
@@ -18,7 +18,7 @@ def about(request):
     return render(request, "tienda/about.html")
 
 class CustomLoginView(LoginView): 
-    authenticationForm = CustonAuthenticationForm
+    authenticationform = CustomAuthenticationForm
     template_name = "tienda/login.html"
     next_page = reverse_lazy("tienda:index")
 
@@ -30,14 +30,11 @@ class CustomLoginView(LoginView):
         return super().form_valid(form)
 
 
-class CustomRegisterView(CreateView):
-    form_class = CustomUserCreationForm
-    template_name = 'tienda/register.html'
-    success_url = reverse_lazy('tienda:login')
+class RegistrarseView(CreateView):
+    form_class = CustomRegistroUsuarioForm  # Usa el formulario personalizado
+    template_name = 'register.html'  # Nombre del template
+    success_url = reverse_lazy('login')  # Redirige al login tras el registro
 
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        messages.success(self.request, 'Registro exitoso. Ahora puedes iniciar sesión.')
-        return super().form_valid(form)
     
 
 

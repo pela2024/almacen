@@ -4,15 +4,26 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
 
-class CustonAuthenticationForm(AuthenticationForm):
+class CustomAuthenticationForm(AuthenticationForm):
     class Meta:
         model= AuthenticationForm
         fields = ["username", " password"]
 
-class CustomUserCreationForm(UserCreationForm):
+
+class CustomRegistroUsuarioForm(UserCreationForm):
+    email = forms.EmailField(required=True)  # Campo de email obligatorio
+
     class Meta:
-        model= User
-        fields = ["username", "email" ," password1", "password2"]
+        model = User  # Usamos el modelo de usuario predeterminado de Django
+        fields = ['username', 'email', 'password1', 'password2']  # Campos necesarios
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']  # Guardar el email del usuario
+        if commit:
+            user.save()
+        return user
+
 
 
 
