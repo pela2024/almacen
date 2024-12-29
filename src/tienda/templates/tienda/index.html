@@ -1,22 +1,27 @@
 {% extends 'tienda/base.html' %}
 {% load static %}
 
-
-
 {% block contenido %}
     <main >
     
         <body>
             <img src="{% static "tienda/imagenes/logo2.jpg" %}" alt="" " style="width: 180px ;height:90px">
-            <h1>Bienvenidos a la plataforma <br> para administradores de consorcios </h1>
-          
+            <h1>Bienvenidos a la plataforma <br> para administradores de consorcios </h1>          
     </body>
         <div>
-            <a href="{% url 'tienda:consorcio_list' %}"><button> Consorcios</button> </a>
-            <a href="{% url 'tienda:liquidacion_list' %}"><button> Liquidaciones</button> </a>
-            <a href="{% url 'tienda:unidades_list' %}"> <button> Unidades </button></a>
-            <a href="{% url 'tienda:about' %}"> <button>Acerca de mi </button></a>
-            <a href="{% url 'tienda:login' %}"> <button>Iniciar secion </button></a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'tienda:consorcio_list' %}"><button> Consorcios</button> </a>
+                <a href="{% url 'tienda:liquidacion_list' %}"><button> Liquidaciones</button> </a>
+                <a href="{% url 'tienda:unidades_list' %}"> <button> Unidades </button></a>
+     
+                <form action="{% url 'tienda:logout' %}" method="post">
+                    {% csrf_token %}  
+                    <button type="submit"> Cerrar Sesion </button>
+                </form>
+                {% else %}
+                <a href="{% url 'tienda:login' %}"> <button>Iniciar Sesion </button></a>
+            {% endif %}
+            <a href="{% url 'tienda:about' %}"> <button>Acerca de mi </button></a>           
         </div>
 
         {% for mesage in messages  %}
