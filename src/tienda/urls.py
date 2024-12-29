@@ -8,7 +8,7 @@ urlpatterns = [
     path("", views.index , name ="index"),
     path("about/",views.about , name ="about"),
     path("login/",views.CustomLoginView.as_view(), name = "login"),
-    path('registrarse/', RegistrarseView.as_view(), name='registrarse'),
+    path('register/', views.RegistrarseView.as_view(), name='register'),
 ]
 
 urlpatterns += [

@@ -32,8 +32,10 @@ class CustomLoginView(LoginView):
 
 class RegistrarseView(CreateView):
     form_class = CustomRegistroUsuarioForm  # Usa el formulario personalizado
-    template_name = 'register.html'  # Nombre del template
-    success_url = reverse_lazy('login')  # Redirige al login tras el registro
+    template_name = 'tienda/register.html'  # Nombre del template
+    success_url = reverse_lazy('tienda:login')  # Redirige al login tras el registro
+
+
 
     
 
