@@ -24,13 +24,6 @@ class CustomRegistroUsuarioForm(UserCreationForm):
             user.save()
         return user
 
-
-
-
-
-
-
-
 class ConsorcioForm(forms.ModelForm):
     class Meta:
         model = Consorcio
@@ -45,3 +38,16 @@ class UnidadesForm(forms.ModelForm):
     class Meta:
         model = Unidades
         fields = "__all__"           
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name'] 
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']  # Guardar el email del usuario
+        if commit:
+            user.save()
+        return user          

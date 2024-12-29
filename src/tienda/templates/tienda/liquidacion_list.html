@@ -17,7 +17,7 @@
                 {% for consorcio in object_list %}
                 <tr>
                     <td>{{ consorcio }}</td>
-                    <td>{{ consorcio.periodo }}</td>
+                    <td>{{ consorcio }}</td>
                     <td>
                         <a href="{% url 'tienda:liquidacion_detail' consorcio.id %}">
                             <button>Ver</button>

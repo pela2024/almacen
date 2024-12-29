@@ -3,13 +3,12 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from django.views.generic import CreateView 
+from django.views.generic import CreateView, UpdateView 
 from django.forms import BaseModelForm
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 
-from .models import  Unidades
-from .forms import   UnidadesForm
-from .forms import CustomAuthenticationForm , CustomRegistroUsuarioForm
+from .forms import CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm
 # Create your views here.
 def index(request):
     return render(request, "tienda/index.html")
@@ -36,18 +35,12 @@ class RegistrarseView(CreateView):
     success_url = reverse_lazy('tienda:login')  # Redirige al login tras el registro
 
 
+class UpdateProfileView(UpdateView):
+    nmodel = User
+    from_class = UserProfileForm
+    template_name = 'tienda/profile.html'  # Nombre del template
+    success_url = reverse_lazy('tienda:index') 
 
-def Unidades_list(request):
-    query = Unidades.objects.all()
-    context ={"object_list": query}
-    return render(request, "tienda/unidades_list.html", context)
+    def get_objetc (self):
 
-def Unidades_create(request):
-    if request.method =="GET":
-        form = UnidadesForm()
-    if request.method == "POST":
-        form = UnidadesForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("tienda:unidades_list")   
-    return render(request, "tienda/unidades_form.html", {"form": form})  
+        return self.request.user

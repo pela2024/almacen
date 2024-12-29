@@ -7,7 +7,11 @@
         {% csrf_token %}
         {{form.as_p}}
             <ul>
-                <li> <strong>domicilio: </strong>{{object.domicilio}}</li>                    
+                <li> <strong>Clave del Consorcio: </strong>{{object.clave_del_consorcio}}</li> 
+                <li> <strong>Domicilio: </strong>{{object.domicilio}}</li> 
+                <li> <strong>Localidad: </strong>{{object.localidad}}</li>  
+                <li> <strong>Provincia: </strong>{{object.provincia}}</li> 
+                <li> <strong>Cuit: </strong>{{object.cuit}}</li>                   
             </ul>
 
            <a href = "{% url "tienda:consorcio_list" %}"><h1>Volver</h1></a>

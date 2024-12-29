@@ -4,7 +4,8 @@
     <form method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">Agregar</button>
+        <button type="submit">datos</button>
+        <button type="submit">gastos</button>
         <a href = "{% url "tienda:liquidacion_list" %}"><h1>Volver</h1></a>
 
     </form>

@@ -2,7 +2,11 @@ from django.db import models
 
 
 class Consorcio(models.Model):
-    domicilio = models.CharField(max_length=255, unique=True)
+    clave_del_consorcio = models.CharField(max_length=255, default="valor_default")
+    domicilio = models.CharField(max_length=255)
+    localidad =models.CharField(max_length=255, default = "caba")
+    provincia = models.CharField(max_length=255, default ="Buenos Aires")
+    cuit = models.CharField(max_length=11)
 
     def __str__(self):
         return self.domicilio
