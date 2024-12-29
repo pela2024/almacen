@@ -11,12 +11,12 @@ class  LiquidacionListView(ListView):
 class LiquidacionCreateView(CreateView):
     model= Liquidacion
     form_class = LiquidacionForm
-    success_url = reverse_lazy ("liquidacion:liquidacion_list")     
+    success_url = reverse_lazy ("tienda:liquidacion_list")     
 
 class LiquidacionUpdateView(UpdateView):
     model= Liquidacion
     form_class = LiquidacionForm
-    success_url = reverse_lazy ("liquidacion:liquidacion_list")      
+    success_url = reverse_lazy ("tienda:liquidacion_list")      
 
 class LiquidacionDetailView(DetailView):
     model= Liquidacion

@@ -37,11 +37,6 @@ class RegistrarseView(CreateView):
 
 
 
-    
-
-
-
-
 def Unidades_list(request):
     query = Unidades.objects.all()
     context ={"object_list": query}
