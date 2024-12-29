@@ -1,12 +1,12 @@
 from django.contrib import messages
-from django.shortcuts import redirect, render
-from django.http import HttpResponse
-from django.contrib.auth.views import LoginView
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView 
-from django.forms import BaseModelForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
+from django.forms import BaseModelForm
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView 
 
 from .forms import CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm
 # Create your views here.
@@ -36,11 +36,28 @@ class RegistrarseView(CreateView):
 
 
 class UpdateProfileView(UpdateView):
-    nmodel = User
-    from_class = UserProfileForm
+    model = User
+    form_class = UserProfileForm
     template_name = 'tienda/profile.html'  # Nombre del template
     success_url = reverse_lazy('tienda:index') 
 
-    def get_objetc (self):
+    def get_object (self):
 
         return self.request.user
+
+
+
+def Unidades_list(request):
+    query = Unidades.objects.all()
+    context ={"object_list": query}
+    return render(request, "tienda/unidades_list.html", context)
+
+def Unidades_create(request):
+    if request.method =="GET":
+        form = UnidadesForm()
+    if request.method == "POST":
+        form = UnidadesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("tienda:unidades_list")   
+    return render(request, "tienda/unidades_form.html", {"form": form})        
