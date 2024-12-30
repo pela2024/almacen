@@ -8,7 +8,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView 
 
-from .forms import CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm
+from .forms import CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm, UnidadesForm
+from .models import Unidades 
 # Create your views here.
 def index(request):
     return render(request, "tienda/index.html")
@@ -46,18 +47,17 @@ class UpdateProfileView(UpdateView):
         return self.request.user
 
 
-
 def Unidades_list(request):
     query = Unidades.objects.all()
-    context ={"object_list": query}
+    context = {"object_list": query}
     return render(request, "tienda/unidades_list.html", context)
 
 def Unidades_create(request):
-    if request.method =="GET":
+    if request.method == "GET":
         form = UnidadesForm()
-    if request.method == "POST":
+    elif request.method == "POST":
         form = UnidadesForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("tienda:unidades_list")   
-    return render(request, "tienda/unidades_form.html", {"form": form})        
+            return redirect("tienda:unidades_list")
+    return render(request, "tienda/unidades_form.html", {"form": form})     

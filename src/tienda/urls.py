@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from tienda.views_models import consorcio, liquidacion  
+from tienda.views_models import consorcio, liquidacion, unidades  
 from . import views 
 
 app_name = "tienda"
