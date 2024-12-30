@@ -5,7 +5,7 @@
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">Agregar</button>
-        <a href = "{% url "tienda:liquidacion_list" %}"><h1>Volver</h1></a>
+        <a href = "{% url "tienda:liquidacion_list" %}"><h1 style="color: blue; text-align: center;">Volver</h1></a>
 
     </form>
 {% endblock contenido %}
