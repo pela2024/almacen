@@ -2,6 +2,12 @@
 
 {% block contenido %}
     <h1>Lista de consorcios</h1>
+<form method="get"> 
+    <input type="text" name="busqueda" placeholder="Buscar...."> </input>
+
+</form>
+
+
         <a href="{% url 'tienda:consorcio_create' %}"><button>Agregar</button></a>
         <a href = "{% url "tienda:index" %}"> <h1> Inicio </h1> </a>
     <table border="2"; style = "color: brown; text-align: justify;" >

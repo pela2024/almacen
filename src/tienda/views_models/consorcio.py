@@ -9,7 +9,11 @@ from ..forms import ConsorcioForm
 
 ### CONSORCIO - LIST VIEW 
 def consorcio_list(request:HttpRequest)-> HttpResponse:
-    queryset = Consorcio.objects.all()
+    busqueda = request.GET.get("busqueda", "")
+    if busqueda:
+       queryset = Consorcio.objects.filter(domicilio__icontains = busqueda)
+    else: 
+         queryset = Consorcio.objects.all()
     return render(request, "tienda/consorcio_list.html",{"object_list": queryset})
 
 #### CONSORCIO - CREATE VIEW 

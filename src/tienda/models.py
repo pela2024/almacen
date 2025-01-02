@@ -19,7 +19,7 @@ class Liquidacion(models.Model):
         unique_together = ('consorcio', 'periodo')  # Restricción única compuesta
 
     def __str__(self):
-        return f"{self.consorcio} - {self.periodo}"
+        return f"{self.consorcio}"
 
 
 
