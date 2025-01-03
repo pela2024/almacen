@@ -1,15 +1,19 @@
 {% extends 'tienda/base.html' %}
 
+{% load static %}
+
 {% block contenido %}
-    <h1>Inicio de secion</h1>
+    <h1>Inicio de sesion</h1>
+    <h2> Solo puede ingresar si esta registrado</h2>
     {% for message in messages  %}
         {{message}}
     {% endfor %}
     <form method="POST">  
         {% csrf_token %}
         {{form}}
-        <button type="submit"> Iniciar secion</button>
+        <button type="submit"> Iniciar sesion</button>
     </form>
-        <p> No tienes una cuenta<a href="{% url 'tienda:register' %}"> Registrate aqui</a>
+        <p> No tienes una cuenta<a href="{% url 'tienda:register' %}">  registrese aqui </a>
         </p>
+        <img src="{% static "tienda/imagenes/edificio.jpg" %}" alt="" " style="width:25%;height:25;">
 {% endblock contenido %}

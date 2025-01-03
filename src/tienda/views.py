@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_not_required  # type = ignore
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
@@ -11,9 +13,11 @@ from django.views.generic import CreateView, UpdateView
 from .forms import CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm, UnidadesForm
 from .models import Unidades 
 # Create your views here.
+@login_not_required 
 def index(request):
     return render(request, "tienda/index.html")
 
+@login_not_required
 def about(request):
     return render(request, "tienda/about.html")
 
@@ -29,12 +33,15 @@ class CustomLoginView(LoginView):
         )
         return super().form_valid(form)
 
-
+@method_decorator(login_not_required, name = "dispatch")
 class RegistrarseView(CreateView):
     form_class = CustomRegistroUsuarioForm  # Usa el formulario personalizado
     template_name = 'tienda/register.html'  # Nombre del template
     success_url = reverse_lazy('tienda:login')  # Redirige al login tras el registro
 
+    def form_valid(self, form:BaseModelForm) -> HttpResponse:
+        messages.success(self.request, "Registro exitoso. Ahora puedes iniciar sesion ")
+        return super().form_valid(form) 
 
 class UpdateProfileView(UpdateView):
     model = User
