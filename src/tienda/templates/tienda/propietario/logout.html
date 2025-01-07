@@ -1,0 +1,6 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+    <p> Has cerrado sesion</p>
+    <a href ="{% url "tienda:propietario_index" %}"><button>Inicio</button></a>
+{% endblock contenido %}

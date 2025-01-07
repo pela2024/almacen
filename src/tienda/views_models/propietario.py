@@ -58,3 +58,6 @@ class PropietarioRegistroView(CreateView):
 
 class AboutPropietarioView(PropietarioRequiredMixin, TemplateView):
     template_name = 'tienda/propietario/about.html'
+
+class LogoutPropietarioView(PropietarioRequiredMixin, TemplateView):
+    template_name = 'tienda/propietario/logout.html'

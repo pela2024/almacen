@@ -127,6 +127,9 @@ STATICFILES_DIRS = [
 LOGIN_URL = 'tienda:login'
 LOGOUT_REDIRECT_URL = 'tienda:login'
 
+LOGIN_REDIRECT_URL = '/propietario/'
+
+
 # Admin settings
 ADMIN_URL = 'admin/'
 
