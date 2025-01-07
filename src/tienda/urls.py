@@ -6,7 +6,8 @@ from .views_models.propietario import (
     LiquidacionesPropietarioListView, 
     LiquidacionPropietarioDetailView,
     PropietarioRegistroView,
-    PropietarioIndexView
+    PropietarioIndexView,
+    AboutPropietarioView
 )
 
 app_name = "tienda"
@@ -41,6 +42,7 @@ urlpatterns += [
 urlpatterns += [
     # URLs para propietarios
     path('propietario/', PropietarioIndexView.as_view(), name='propietario_index'),
+    path('propietario/', AboutPropietarioView.as_view(), name='About_propietario'),
     path('propietario/registro/', PropietarioRegistroView.as_view(), name='propietario_registro'),
     path('propietario/liquidaciones/', LiquidacionesPropietarioListView.as_view(), name='liquidaciones_propietario'),
     path('propietario/liquidacion/<int:pk>/', LiquidacionPropietarioDetailView.as_view(), name='liquidacion_propietario_detail'),

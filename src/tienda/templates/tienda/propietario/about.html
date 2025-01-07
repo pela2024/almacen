@@ -1,0 +1,22 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+
+
+
+{% block contenido %}
+    
+    <h1 style="color: black; text-align: center; "> Acerca de mi</h1>  
+    <p style="color: black; text-align: center; font-family: Georgia, 'Times New Roman', Times, serif; ">
+        MI nombre es Cristian Gustavo Gresia <br> Soy administrador de consorcios <br>
+        la idea de crear la pagina es ofrecer un servicio a 
+        los administradores de consorcios <br> a fin de cumplir con la nueva norvativa impuestas por<br> 
+        el Gobierno de la ciudad de Buenos Aires <br> En lo personal me interesa seguir adquiriendo<br>
+         conocimientos de programacion para tener una pagina conpetitiva en el mercado <br>y en el futuro 
+        dedicarme solo al rubro de la programacion  <br>
+
+    </P>
+    
+   <p style="color: black; text-align: center; ">FECHA DE CREACION DE LA PAGINA NOVIEMBRE 2024 </p>
+    
+    <a href = "{% url "tienda:propietario_index" %}"> <h1 style="color: blue; text-align: center;"> Inicio </h1> </a>
+{% endblock contenido %}

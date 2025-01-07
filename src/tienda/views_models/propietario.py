@@ -55,3 +55,6 @@ class PropietarioRegistroView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         return response
+
+class AboutPropietarioView(PropietarioRequiredMixin, TemplateView):
+    template_name = 'tienda/propietario/about.html'
