@@ -1,0 +1,31 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+<div class="container">
+    <div class="navigation-buttons" style="margin-bottom: 20px;">
+        <a href="{% url 'tienda:index' %}" class="btn btn-primary">Inicio</a>
+        <a href="{% url 'tienda:about' %}" class="btn btn-info">Acerca de</a>
+        <a href="{% url 'tienda:liquidaciones_propietario' %}" class="btn btn-secondary">Volver a mis liquidaciones</a>
+    </div>
+
+    <div class="card">
+        <h2>Liquidación - Periodo {{ liquidacion.periodo }}</h2>
+        <div class="info-consorcio">
+            <p><strong>Consorcio:</strong> {{ liquidacion.consorcio.domicilio }}</p>
+            <p><strong>CUIT:</strong> {{ liquidacion.consorcio.cuit }}</p>
+            <p><strong>Localidad:</strong> {{ liquidacion.consorcio.localidad }}</p>
+            <p><strong>Provincia:</strong> {{ liquidacion.consorcio.provincia }}</p>
+        </div>
+        
+        <div class="info-unidad">
+            <h3>Mi Unidad</h3>
+            <p><strong>Piso:</strong> {{ user.propietario.unidad.piso }}</p>
+            <p><strong>Departamento:</strong> {{ user.propietario.unidad.depto }}</p>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a href="{% url 'tienda:liquidaciones_propietario' %}" class="btn btn-primary">Volver a la lista</a>
+    </div>
+</div>
+{% endblock %}

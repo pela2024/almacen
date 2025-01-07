@@ -1,0 +1,41 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+<div class="container">
+    <div class="navigation-buttons" style="margin-bottom: 20px;">
+        <a href="{% url 'tienda:index' %}" class="btn btn-primary">Inicio</a>
+        <a href="{% url 'tienda:about' %}" class="btn btn-info">Acerca de</a>
+    </div>
+
+    <h2>Mis Liquidaciones</h2>
+    <div class="card">
+        <p>Consorcio: {{ user.propietario.consorcio.domicilio }}</p>
+        <p>Unidad: Piso {{ user.propietario.unidad.piso }} Depto {{ user.propietario.unidad.depto }}</p>
+    </div>
+
+    {% if liquidaciones %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Periodo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for liquidacion in liquidaciones %}
+                <tr>
+                    <td>{{ liquidacion.periodo }}</td>
+                    <td>
+                        <a href="{% url 'tienda:liquidacion_propietario_detail' liquidacion.pk %}" class="btn btn-primary">Ver Detalle</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">
+            No hay liquidaciones disponibles para mostrar.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

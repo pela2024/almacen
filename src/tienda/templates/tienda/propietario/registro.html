@@ -1,0 +1,78 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+<div class="container">
+    <div class="card">
+        <h2>Registro de Propietario</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Usuario:</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="alert alert-error">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+                {{ form.nombre }}
+                {% if form.nombre.errors %}
+                    <div class="alert alert-error">{{ form.nombre.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.apellido.id_for_label }}">Apellido:</label>
+                {{ form.apellido }}
+                {% if form.apellido.errors %}
+                    <div class="alert alert-error">{{ form.apellido.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email:</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="alert alert-error">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.telefono.id_for_label }}">Teléfono:</label>
+                {{ form.telefono }}
+                {% if form.telefono.errors %}
+                    <div class="alert alert-error">{{ form.telefono.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.unidad.id_for_label }}">Unidad:</label>
+                {{ form.unidad }}
+                {% if form.unidad.errors %}
+                    <div class="alert alert-error">{{ form.unidad.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password1.id_for_label }}">Contraseña:</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="alert alert-error">{{ form.password1.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password2.id_for_label }}">Confirmar Contraseña:</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="alert alert-error">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

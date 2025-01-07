@@ -22,16 +22,23 @@ def about(request):
     return render(request, "tienda/about.html")
 
 class CustomLoginView(LoginView): 
-    authenticationform = CustomAuthenticationForm
+    authentication_form = CustomAuthenticationForm
     template_name = "tienda/login.html"
-    next_page = reverse_lazy("tienda:index")
 
-    def form_valid(self, form: AuthenticationForm)-> HttpResponse:
+    def get_success_url(self):
+        if self.request.user.is_staff:
+            return reverse_lazy('admin:index')
+        elif hasattr(self.request.user, 'propietario'):
+            return reverse_lazy('tienda:propietario_index')
+        return reverse_lazy('tienda:index')
+
+    def form_valid(self, form):
         usuario = form.get_user()
         messages.success (
             self.request, f"Inicio de secion exitoso !Bienvenido {usuario.username}"
         )
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        return response
 
 @method_decorator(login_not_required, name = "dispatch")
 class RegistrarseView(CreateView):

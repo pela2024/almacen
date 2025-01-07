@@ -1,5 +1,5 @@
 from django import forms
-from .models import Consorcio, Liquidacion, Unidades
+from .models import Consorcio, Liquidacion, Unidades, Propietario
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
@@ -51,3 +51,29 @@ class UserProfileForm(forms.ModelForm):
         if commit:
             user.save()
         return user          
+
+class PropietarioRegistroForm(UserCreationForm):
+    nombre = forms.CharField(max_length=255)
+    apellido = forms.CharField(max_length=255)
+    email = forms.EmailField()
+    telefono = forms.CharField(max_length=20)
+    unidad = forms.ModelChoiceField(queryset=Unidades.objects.all())
+
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2', 'nombre', 'apellido', 'email', 'telefono', 'unidad')
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+            Propietario.objects.create(
+                user=user,
+                unidad=self.cleaned_data['unidad'],
+                nombre=self.cleaned_data['nombre'],
+                apellido=self.cleaned_data['apellido'],
+                email=self.cleaned_data['email'],
+                telefono=self.cleaned_data['telefono']
+            )
+        return user
