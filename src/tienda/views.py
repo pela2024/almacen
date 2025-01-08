@@ -26,19 +26,30 @@ class CustomLoginView(LoginView):
     template_name = "tienda/login.html"
 
     def get_success_url(self):
-        if self.request.user.is_staff:
-            return reverse_lazy('admin:index')
-        elif hasattr(self.request.user, 'propietario'):
+        role = self.request.POST.get('role', '')
+        
+        if role == 'propietario' and hasattr(self.request.user, 'propietario'):
             return reverse_lazy('tienda:propietario_index')
+        elif role == 'usuario' or not hasattr(self.request.user, 'propietario'):
+            return reverse_lazy('tienda:index')
+        elif self.request.user.is_staff:
+            return reverse_lazy('admin:index')
+        
+        # Default fallback
         return reverse_lazy('tienda:index')
 
     def form_valid(self, form):
         usuario = form.get_user()
-        messages.success (
-            self.request, f"Inicio de secion exitoso !Bienvenido {usuario.username}"
+        role = self.request.POST.get('role', '')
+        
+        if role == 'propietario' and not hasattr(usuario, 'propietario'):
+            messages.error(self.request, "No tienes permisos de propietario")
+            return self.form_invalid(form)
+            
+        messages.success(
+            self.request, f"Inicio de sesión exitoso. ¡Bienvenido {usuario.username}!"
         )
-        response = super().form_valid(form)
-        return response
+        return super().form_valid(form)
 
 @method_decorator(login_not_required, name = "dispatch")
 class RegistrarseView(CreateView):
