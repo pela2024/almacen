@@ -5,7 +5,16 @@
 <div class="container">
     <div class="card text-center mb-4">
         <div class="card-body">
-            <h1 class="card-title">Bienvenido, {{ user.propietario.nombre }} {{ user.propietario.apellido }}</h1>
+            <h1>Bienvenido a Administracion Gresia </h1>
+            <P style="color: black; text-align: center; font-family: Georgia, 'Times New Roman', Times, serif; "> Domicilio: Santiago del Estero 366 . piso 3 oficina 36<br>
+                Mail: adm.gresia@gmail.com<br>
+                 telefonos : 11 4096 6627<br>
+                 telefonos para EMERGENCIAS : 11 4096 6627<br>
+                 dias y horarios de atencion: <br> de Lunes a Jueves de 13 a 18 hs<br>
+                 Situacion Fiscal: Monotributista<br>
+                 R.P.A. 13160</p>
+
+            <h1 class="card-title">  {{ user.propietario.nombre }} {{ user.propietario.apellido }}</h1>
             <div class="info-propietario mt-3">
                 <p><strong>Consorcio:</strong> {{ user.propietario.consorcio.domicilio }}</p>
                 <p><strong>Unidad:</strong> Piso {{ user.propietario.unidad.piso }} Depto {{ user.propietario.unidad.depto }}</p>
@@ -20,7 +29,7 @@
                     <i class="fas fa-file-invoice-dollar"></i> Ver Mis Liquidaciones
                 </a>
                 
-                <a href="{% url 'tienda:about' %}" class="btn btn-info btn-lg">
+                <a href="{% url 'tienda:About_propietario' %}" class="btn btn-info btn-lg">
                     <i class="fas fa-info-circle"></i> Acerca de
                 </a>
 
@@ -49,18 +58,18 @@
     }
 
     .card {
-        background-color: #c1c436;
+        background-color: #5bca7c;
         border: none;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .info-propietario {
         font-size: 1.1em;
-        color: #666;
+        color: #000000;
     }
 
     .info-propietario strong {
-        color: #333;
+        color: #000000;
     }
 </style>
 {% endblock %}

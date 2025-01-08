@@ -25,6 +25,7 @@
                 {% for liquidacion in liquidaciones %}
                 <tr>
                     <td>{{ liquidacion.periodo }}</td>
+               
                     <td>
                         <a href="{% url 'tienda:liquidacion_propietario_detail' liquidacion.pk %}" class="btn btn-primary">Ver Detalle</a>
                     </td>
