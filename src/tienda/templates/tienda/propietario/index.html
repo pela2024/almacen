@@ -13,9 +13,8 @@
                  dias y horarios de atencion: <br> de Lunes a Jueves de 13 a 18 hs<br>
                  Situacion Fiscal: Monotributista<br>
                  R.P.A. 13160</p>
-
             <h1 class="card-title">  {{ user.propietario.nombre }} {{ user.propietario.apellido }}</h1>
-            <div class="info-propietario mt-3">
+            <div class="info-propietario mt-1">
                 <p><strong>Consorcio:</strong> {{ user.propietario.consorcio.domicilio }}</p>
                 <p><strong>Unidad:</strong> Piso {{ user.propietario.unidad.piso }} Depto {{ user.propietario.unidad.depto }}</p>
             </div>
@@ -61,6 +60,7 @@
         background-color: #5bca7c;
         border: none;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        height: 600px;
     }
 
     .info-propietario {

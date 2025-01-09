@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView 
+from django.contrib.auth.decorators import login_required
 
 from .forms import CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm, UnidadesForm
 from .models import Unidades 
@@ -21,35 +22,30 @@ def index(request):
 def about(request):
     return render(request, "tienda/about.html")
 
-class CustomLoginView(LoginView): 
+class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
     template_name = "tienda/login.html"
 
     def get_success_url(self):
-        role = self.request.POST.get('role', '')
-        
-        if role == 'propietario' and hasattr(self.request.user, 'propietario'):
-            return reverse_lazy('tienda:propietario_index')
-        elif role == 'usuario' or not hasattr(self.request.user, 'propietario'):
-            return reverse_lazy('tienda:index')
-        elif self.request.user.is_staff:
-            return reverse_lazy('admin:index')
-        
-        # Default fallback
-        return reverse_lazy('tienda:index')
+        # Redirige según el tipo de usuario
+        if self.request.user.is_superuser:  # Administrador
+            return reverse_lazy('admin:index')  # Cambia según tu URL de admin
+        elif hasattr(self.request.user, 'propietario'):  # Usuario Propietario
+            return reverse_lazy('tienda:propietario_index')  # Cambia según tu URL de propietario
+        else:  # Usuario estándar
+            return reverse_lazy('tienda:index')  # URL de usuario general
 
     def form_valid(self, form):
-        usuario = form.get_user()
-        role = self.request.POST.get('role', '')
-        
-        if role == 'propietario' and not hasattr(usuario, 'propietario'):
-            messages.error(self.request, "No tienes permisos de propietario")
-            return self.form_invalid(form)
-            
+        # Mensaje de éxito al iniciar sesión
         messages.success(
-            self.request, f"Inicio de sesión exitoso. ¡Bienvenido {usuario.username}!"
+            self.request, f"Inicio de sesión exitoso. ¡Bienvenido {self.request.user.username}!"
         )
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        # Mensaje de error si fallan las credenciales
+        messages.error(self.request, "Usuario o contraseña incorrectos.")
+        return super().form_invalid(form)
 
 @method_decorator(login_not_required, name = "dispatch")
 class RegistrarseView(CreateView):
@@ -86,3 +82,11 @@ def Unidades_create(request):
             form.save()
             return redirect("tienda:unidades_list")
     return render(request, "tienda/unidades_form.html", {"form": form})     
+
+@login_required
+def admin_dashboard_view(request):
+    return render(request, "tienda/admin_dashboard.html")
+
+@login_required
+def propietario_dashboard_view(request):
+    return render(request, "tienda/propietario_dashboard.html")

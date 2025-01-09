@@ -3,43 +3,38 @@
 {% load static %}
 
 {% block contenido %}
-<div class="container">
-    <div class="card">
-        <h2>Iniciar Sesión</h2>
-        <form method="post">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="role">Tipo de Usuario:</label>
-                <select name="role" id="role">
-                    <option value="usuario">Usuario</option>
-                    <option value="propietario">Propietario</option>
-                </select>
-            </div>
 
-            <div class="form-group">
-                <label for="{{ form.username.id_for_label }}">Usuario:</label>
-                {{ form.username }}
-                {% if form.username.errors %}
-                    <div class="alert alert-error">{{ form.username.errors }}</div>
-                {% endif %}
-            </div>
 
-            <div class="form-group">
-                <label for="{{ form.password.id_for_label }}">Contraseña:</label>
-                {{ form.password }}
-                {% if form.password.errors %}
-                    <div class="alert alert-error">{{ form.password.errors }}</div>
-                {% endif %}
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <h1> CG-GESTICON</h1>
 
-            <button type="submit">Iniciar Sesión</button>
-        </form>
-        
-        <div>
-            <p>¿No tienes una cuenta? <a href="{% url 'tienda:propietario_registro' %}">Regístrate como propietario</a></p>
-            <p>¿Eres usuario? <a href="{% url 'tienda:register' %}">Regístrate como usuario</a></p>
-        </div>
-    </div>
-</div>
+    <h2>Bienvenidos a la plataforma <br> para administradores de consorcios</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Iniciar Sesión</button>
+    </form>
+    <p>
+        ¿no tienes una cuenta? <a href="{% url 'tienda:register' %}">  Registrese aqui !</a>
+
+    </p>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
 {% endblock contenido %}

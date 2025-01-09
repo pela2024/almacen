@@ -1,5 +1,6 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
+from .views import CustomLoginView, admin_dashboard_view, propietario_dashboard_view
 from tienda.views_models import consorcio, liquidacion, unidades  
 from . import views 
 from .views_models.propietario import (
@@ -19,6 +20,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='tienda:login'), name='logout'),
     path('register/', views.RegistrarseView.as_view(), name='register'),
     path('profile/', views.UpdateProfileView.as_view(), name='profile'),
+    path('admin-dashboard/', admin_dashboard_view, name='admin_dashboard'),  # Cambia según la vista del admin
+    path('propietario-dashboard/', propietario_dashboard_view, name='propietario_index'),  # Cambia según tu vista
 ]
 
 urlpatterns += [
@@ -49,3 +52,6 @@ urlpatterns += [
     path('propietario/liquidaciones/', LiquidacionesPropietarioListView.as_view(), name='liquidaciones_propietario'),
     path('propietario/liquidacion/<int:pk>/', LiquidacionPropietarioDetailView.as_view(), name='liquidacion_propietario_detail'),
 ]
+
+    
+
