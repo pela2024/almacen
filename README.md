@@ -8,19 +8,18 @@
 
 ## Alumno
 -Gresia Cristian Gustavo 
--PROYECTO : Almacen de picadas
+-PROYECTO :CG-Gesticon . Una plataforma para administradores de consocios 
+donde puedan ingresar y cargar todos los datos para generar las liqudaciones de expensas, 
+recibos de sueldo y demas utilidades
 
 # Objetivos del proyecto
-*1- armar una pagina web para un comercio 
-*2- poner en funcionamiento la web con un carrito de compras
+*1- Armar una pagina web para cg-gesticon. Gestoria para administradores  
+*2- poner en funcionamiento la web con todas sus funcionalidades: botones que debe tener
+** Consorcios-Liquidaciones- Unidades-Proveedores-Sueldos-Empleados-Emails-Pagos a la plataforma
 
 # aspectos tecnicos
-He usado django , creando 3 modelos
+He usado django y CSS
 
 ### Puntos a mejorar
+Varios
 
-## se hizo crud en: 
-    consorcio_list.html
-    liquidaciones_list.html
-    unidades_list.html
-    incluyendo estilos CSS
