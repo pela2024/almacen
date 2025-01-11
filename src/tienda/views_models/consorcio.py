@@ -1,20 +1,30 @@
 from django.http import HttpRequest , HttpResponse
 from django.shortcuts import redirect, render
 
-from ..models import Consorcio
+from ..models import Consorcio, Liquidacion
 from ..forms import ConsorcioForm
+from django.shortcuts import  get_object_or_404
 
 
 
 
 ### CONSORCIO - LIST VIEW 
-def consorcio_list(request:HttpRequest)-> HttpResponse:
-    busqueda = request.GET.get("busqueda", "")
-    if busqueda:
-       queryset = Consorcio.objects.filter(domicilio__icontains = busqueda)
-    else: 
-         queryset = Consorcio.objects.all()
-    return render(request, "tienda/consorcio_list.html",{"object_list": queryset})
+
+
+def consorcio_list(request):
+    consorcios = Consorcio.objects.all()
+    return render(request, 'tienda/consorcios_list.html', {'object_list': consorcios})
+
+def detalle_consorcio(request, pk):
+    consorcio = get_object_or_404(Consorcio, pk=pk)
+    liquidaciones = consorcio.liquidacion_set.all()
+    ultima_liquidacion = liquidaciones.last() if liquidaciones.exists() else None
+    return render(request, 'tienda/detalle_consorcio.html', {
+        'consorcio': consorcio,
+        'liquidaciones': liquidaciones,
+        'ultima_liquidacion': ultima_liquidacion
+    })
+
 
 #### CONSORCIO - CREATE VIEW 
 def consorcio_create(request: HttpRequest)-> HttpResponse:

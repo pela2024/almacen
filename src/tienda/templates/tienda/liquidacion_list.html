@@ -1,38 +1,57 @@
 {% extends 'tienda/base.html' %}
 
 {% block contenido %}
-    <h1>Lista de Liquidaciones</h1>
-    <a href="{% url 'tienda:liquidacion_create' %}"><button>Crear Liquidaciones</button></a>
-    <a href="{% url 'tienda:index' %}"><h1>Inicio</h1></a>
-    
-    <table border="2" style="color: brown; text-align: justify;">
-        <thead>
+<h1>Lista de Consorcios</h1>
+
+<a href="{% url 'tienda:consorcio_create' %}">
+    <button>Agregar Nuevo Consorcio</button>
+</a>
+<a href="{% url 'tienda:index' %}">
+    <h1>Inicio</h1>
+</a>
+
+<table border="2" style="color: brown; text-align: justify;">
+    <thead>
+        <tr>
+            <th style="color:black; text-align: center;">Consorcios</th>
+            <th>Última Liquidación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if object_list %}
+            {% for consorcio in object_list %}
             <tr>
-                <th style="color:black; text-align: center;">Liquidaciones</th>
-                <th>Acciones</th>
+                <!-- Cada consorcio será un enlace a su vista detallada -->
+                <td>
+                    <a href="{% url 'tienda:consorcio_detail' consorcio.id %}">
+                        {{ consorcio.domicilio }}
+                    </a>
+                </td>
+                
+                <!-- Mostrar última liquidación (si existe) -->
+                <td>
+                    {% with consorcio.liquidacion_set.last as ultima_liquidacion %}
+                        {% if ultima_liquidacion %}
+                            {{ ultima_liquidacion.periodo }}
+                        {% else %}
+                            No hay liquidaciones
+                        {% endif %}
+                    {% endwith %}
+                </td>
+                
+                <td>
+                    <a href="{% url 'tienda:consorcio_update' consorcio.id %}">
+                        <button>Editar</button>
+                    </a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            {% if object_list %}
-                {% for consorcio in object_list %}
-                <tr>
-                    <td>{{ consorcio }}</td>
-                    <td>{{ periodo }}</td>
-                    <td>
-                        <a href="{% url 'tienda:liquidacion_detail' consorcio.id %}">
-                            <button>Ver</button>
-                        </a>
-                        <a href="{% url 'tienda:liquidacion_update' consorcio.id %}">
-                            <button>Editar</button>
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="2">No hay datos disponibles.</td>
-                </tr>
-            {% endif %}
-        </tbody>
-    </table>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="3">No hay consorcios disponibles.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
 {% endblock contenido %}

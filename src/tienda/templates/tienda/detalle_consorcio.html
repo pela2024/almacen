@@ -1,0 +1,25 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+<h1>Detalles del Consorcio</h1>
+<p><strong>Domicilio:</strong> {{ consorcio.domicilio }}</p>
+<p><strong>Localidad:</strong> {{ consorcio.localidad }}</p>
+<p><strong>Provincia:</strong> {{ consorcio.provincia }}</p>
+<p><strong>CUIT:</strong> {{ consorcio.cuit }}</p>
+
+<h2>Última Liquidación</h2>
+{% if ultima_liquidacion %}
+    <p>Período: {{ ultima_liquidacion.periodo }}</p>
+{% else %}
+    <p>No hay liquidaciones disponibles.</p>
+{% endif %}
+
+<h2>Historial de Liquidaciones</h2>
+<ul>
+    {% for liquidacion in liquidaciones %}
+        <li>{{ liquidacion.periodo }}</li>
+    {% empty %}
+        <li>No hay liquidaciones registradas.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

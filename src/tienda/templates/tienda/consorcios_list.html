@@ -1,0 +1,66 @@
+{% extends 'tienda/base.html' %}
+
+{% block contenido %}
+<h1>Lista de consorcios</h1>
+
+<!-- Formulario de búsqueda -->
+<form method="get"> 
+    <input type="text" name="busqueda" placeholder="Buscar...."> 
+    <button type="submit">Buscar</button>
+</form>
+
+<!-- Botón para agregar un nuevo consorcio -->
+<a href="{% url 'tienda:consorcio_create' %}">
+    <button>Agregar Consorcio</button>
+</a>
+<a href="{% url 'tienda:index' %}">
+    <h1>Inicio</h1>
+</a>
+
+<table border="2" style="color: brown; text-align: justify; width: 100%;">
+    <thead>
+        <tr>
+            <th style="color: black; text-align: center;">Consorcios</th>
+            <th style="color: black; text-align: center;">Última Liquidación</th>
+            <th style="color: black; text-align: center;">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for consorcio in object_list %}
+            <tr>
+                <!-- Cada consorcio como link que lleva al detalle -->
+                <td>
+                    <a href="{% url 'tienda:consorcio_detail' consorcio.id %}">
+                        {{ consorcio.domicilio }}
+                    </a>
+                </td>
+                <!-- Última liquidación generada -->
+                <td>
+                    {% with consorcio.liquidacion_set.last as ultima_liquidacion %}
+                        {% if ultima_liquidacion %}
+                            {{ ultima_liquidacion.periodo }}
+                        {% else %}
+                            Sin liquidaciones
+                        {% endif %}
+                    {% endwith %}
+                </td>
+                <!-- Botones de acciones -->
+                <td>
+                    <a href="{% url 'tienda:consorcio_update' consorcio.id %}">
+                        <button>Editar</button>
+                    </a>
+                    <a href="{% url 'tienda:consorcio_confirm_delete' consorcio.id %}">
+                        <button>Eliminar</button>
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3" style="text-align: center;">No hay datos disponibles.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock contenido %}
+
+
