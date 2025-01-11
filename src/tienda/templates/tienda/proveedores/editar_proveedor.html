@@ -1,7 +1,7 @@
 {% extends 'tienda/base.html' %}
 
-{% block content %}
-<h1>Editar Proveedor: {{ proveedor.nombre }}</h1>
+{% block contenido %}
+<h1>Editar Proveedor: {{ proveedor.razon_social }}</h1>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

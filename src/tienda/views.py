@@ -97,8 +97,15 @@ def propietario_dashboard_view(request):
 
 
 def lista_proveedores(request):
-    proveedores = Proveedor.objects.all()
-    return render(request, 'tienda/proveedores/lista_proveedores.html', {'proveedores': proveedores})
+    try:
+        proveedores = Proveedor.objects.all()
+        print("Proveedores encontrados:", proveedores.count())
+        for p in proveedores:
+            print(f"Proveedor: {p.razon_social}")
+        return render(request, 'tienda/proveedores/lista_proveedores.html', {'proveedores': proveedores})
+    except Exception as e:
+        print("Error en lista_proveedores:", str(e))
+        return render(request, 'tienda/proveedores/lista_proveedores.html', {'error': str(e)})
 
 def crear_proveedor(request):
     if request.method == 'POST':
@@ -109,7 +116,7 @@ def crear_proveedor(request):
             return redirect('tienda:lista_proveedores')
     else:
         form = ProveedorForm()
-    return render(request, 'tienda/crear_proveedor.html', {'form': form})
+    return render(request, 'tienda/proveedores/crear_proveedor.html', {'form': form})
 
 def editar_proveedor(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
@@ -121,7 +128,7 @@ def editar_proveedor(request, pk):
             return redirect('tienda:lista_proveedores')
     else:
         form = ProveedorForm(instance=proveedor)
-    return render(request, 'tienda/editar_proveedor.html', {'form': form, 'proveedor': proveedor})
+    return render(request, 'tienda/proveedores/editar_proveedor.html', {'form': form, 'proveedor': proveedor})
 
 def eliminar_proveedor(request, pk):
     proveedor = get_object_or_404(Proveedor, pk=pk)
@@ -129,4 +136,4 @@ def eliminar_proveedor(request, pk):
         proveedor.delete()
         messages.success(request, "Proveedor eliminado exitosamente.")
         return redirect('tienda:lista_proveedores')
-    return render(request, 'tienda/eliminar_proveedor.html', {'proveedor': proveedor})
+    return render(request, 'tienda/proveedores/eliminar_proveedor.html', {'proveedor': proveedor})

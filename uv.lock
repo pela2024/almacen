@@ -54,6 +54,12 @@ wheels = [
 name = "src"
 version = "0.1.0"
 source = { virtual = "src" }
+dependencies = [
+    { name = "django" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "django", specifier = ">=5.1.4" }]
 
 [[package]]
 name = "tzdata"

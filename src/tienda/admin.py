@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Liquidacion, Unidades , Consorcio
+from .models import Liquidacion, Unidades, Consorcio, Proveedor
 
 
 @admin.register(Consorcio)
@@ -19,4 +19,6 @@ class UnidadesAdmin(admin.ModelAdmin):
 class LiquidacionAdmin(admin.ModelAdmin):
     list_display = ("consorcio","periodo", )
 
-
+@admin.register(Proveedor)
+class ProveedorAdmin(admin.ModelAdmin):
+    list_display = ("razon_social", "cuit", "rubro", "actividad")

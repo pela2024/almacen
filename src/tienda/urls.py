@@ -55,12 +55,9 @@ urlpatterns += [
     path('propietario/liquidacion/<int:pk>/', LiquidacionPropietarioDetailView.as_view(), name='liquidacion_propietario_detail'),
 ]
 
-
 urlpatterns += [
     path('proveedores/', views.lista_proveedores, name='lista_proveedores'),
     path('proveedores/crear/', views.crear_proveedor, name='crear_proveedor'),
     path('proveedores/editar/<int:pk>/', views.editar_proveedor, name='editar_proveedor'),
     path('proveedores/eliminar/<int:pk>/', views.eliminar_proveedor, name='eliminar_proveedor'),
 ]
-
-

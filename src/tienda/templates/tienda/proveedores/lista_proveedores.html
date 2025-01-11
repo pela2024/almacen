@@ -1,21 +1,47 @@
 {% extends 'tienda/base.html' %}
 
-{% block content %}
-<h1>Lista de Proveedores</h1>
-<a href="{% url 'tienda:crear_proveedor' %}" class="btn btn-success">Nuevo Proveedor</a>
+{% block contenido %}
+<div class="container mt-4">
+    <h1>Lista de Proveedores</h1>
+    
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+    {% endif %}
 
-{% if proveedores %}
-    <ul>
-        {% for proveedor in proveedores %}
-            <li>
-                {{ proveedor.razon_social }} - {{ proveedor.cuit }} - {{ proveedor.actividad }} - {{ proveedor.rubro }}
-                <a href="{% url 'tienda:editar_proveedor' proveedor.id %}">Editar</a> |
-                <a href="{% url 'tienda:eliminar_proveedor' proveedor.id %}">Eliminar</a>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No hay proveedores registrados.</p>
-{% endif %}
+    <a href="{% url 'tienda:crear_proveedor' %}" class="btn btn-primary">Nuevo Proveedor</a>
+
+    {% if proveedores %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Razón Social</th>
+                    <th>CUIT</th>
+                    <th>Rubro</th>
+                    <th>Actividad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for proveedor in proveedores %}
+                    <tr>
+                        <td>{{ proveedor.razon_social }}</td>
+                        <td>{{ proveedor.cuit }}</td>
+                        <td>{{ proveedor.rubro }}</td>
+                        <td>{{ proveedor.actividad }}</td>
+                        <td>
+                            <a href="{% url 'tienda:editar_proveedor' proveedor.id %}">Editar</a> |
+                            <a href="{% url 'tienda:eliminar_proveedor' proveedor.id %}">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay proveedores registrados.</p>
+    {% endif %}
+    
+    <a href="{% url 'tienda:index' %}"> <h1 style="color: blue; text-align: center;">Inicio</h1></a>
+</div>
 {% endblock %}
-
