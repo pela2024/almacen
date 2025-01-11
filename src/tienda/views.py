@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_not_required  # type = ignore
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.forms import BaseModelForm
@@ -95,8 +94,6 @@ def admin_dashboard_view(request):
 @login_required
 def propietario_dashboard_view(request):
     return render(request, "tienda/propietario_dashboard.html")
-
-
 
 
 def lista_proveedores(request):

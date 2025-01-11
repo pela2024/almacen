@@ -1,15 +1,17 @@
 from django.urls import path
+
 from django.contrib.auth.views import LogoutView
-from .views import CustomLoginView, admin_dashboard_view, propietario_dashboard_view
-from tienda.views_models import consorcio, liquidacion, unidades  
+from .views import  admin_dashboard_view, propietario_dashboard_view
+from tienda.views_models import consorcio, liquidacion
 from . import views 
+from django.http import HttpResponse
 from .views_models.propietario import (
     LiquidacionesPropietarioListView, 
     LiquidacionPropietarioDetailView,
     PropietarioRegistroView,
     PropietarioIndexView,
     AboutPropietarioView,
-    LogoutPropietarioView
+    
 )
 
 app_name = "tienda"
