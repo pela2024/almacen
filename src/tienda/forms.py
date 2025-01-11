@@ -2,6 +2,7 @@ from django import forms
 from .models import Consorcio, Liquidacion, Unidades, Propietario
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
+from .models import Proveedor
 
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -77,3 +78,9 @@ class PropietarioRegistroForm(UserCreationForm):
                 telefono=self.cleaned_data['telefono']
             )
         return user
+    
+
+class ProveedorForm(forms.ModelForm):
+    class Meta:
+        model = Proveedor
+        fields = ['razon_social', 'cuit', 'actividad', "rubro"]

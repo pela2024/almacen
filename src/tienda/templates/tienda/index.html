@@ -13,6 +13,7 @@
                 <a href="{% url 'tienda:consorcio_list' %}"><button> Consorcios</button> </a>
                 <a href="{% url 'tienda:liquidacion_list' %}"><button> Liquidaciones</button> </a>
                 <a href="{% url 'tienda:unidades_list' %}"> <button> Unidades </button></a>
+                <a href="{% url 'tienda:lista_proveedores' %}"> <button> Proveedores </button></a>
      
                 <form action="{% url 'tienda:logout' %}" method="post">
                     {% csrf_token %}  

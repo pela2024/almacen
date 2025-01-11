@@ -50,3 +50,14 @@ class Propietario(models.Model):
     @property
     def consorcio(self):
         return self.unidad.liquidacion.consorcio if self.unidad else None
+
+
+class Proveedor(models.Model):
+    razon_social = models.CharField(max_length=150, blank=True, null=True)  # Opcional
+    cuit = models.CharField(max_length=11, unique=True)  # CUIT único
+    rubro = models.CharField(max_length=100, blank=True, null=True)  # Opcional
+    actividad = models.TextField(blank=True, null=True)  # Campo largo opcional
+    
+
+    def __str__(self):
+        return f"{self.razon_social} - {self.cuit}"
