@@ -67,7 +67,7 @@ from django.db import models
 class Gastos(models.Model):
     consorcio = models.ForeignKey(Consorcio, on_delete=models.CASCADE, related_name='gastos', null=True)
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE, related_name='gastos_proveedor')
-    factura = models.CharField(max_length=12)
+    factura = models.CharField(max_length=22)
     concepto = models.CharField(max_length=1000)
     columna = models.CharField(max_length=150)
     importe = models.DecimalField(max_digits=8, decimal_places=2)
