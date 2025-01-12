@@ -1,7 +1,5 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
-
-
 from .. forms import LiquidacionForm
 from .. models import Liquidacion
 
