@@ -1,21 +1,31 @@
 {% extends 'tienda/base.html' %}
 
 {% block contenido %}
-    <form method="post">
-
-        <h1>Consorcio - Vista en detalle</h1>
-        {% csrf_token %}
-        {{form.as_p}}
-            <ul>
-                <li> <strong>Clave del Consorcio: </strong>{{object.clave_del_consorcio}}</li> 
-                <li> <strong>Domicilio: </strong>{{object.domicilio}}</li> 
-                <li> <strong>Localidad: </strong>{{object.localidad}}</li>  
-                <li> <strong>Provincia: </strong>{{object.provincia}}</li> 
-                <li> <strong>Cuit: </strong>{{object.cuit}}</li>                   
+<div class="container">
+    <h1 class="text-center mb-4">Consorcio - Vista en detalle</h1>
+    
+    <div class="card">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Clave del Consorcio: </strong>{{object.clave_del_consorcio}}</li> 
+                <li class="list-group-item"><strong>Domicilio: </strong>{{object.domicilio}}</li> 
+                <li class="list-group-item"><strong>Localidad: </strong>{{object.localidad}}</li>  
+                <li class="list-group-item"><strong>Provincia: </strong>{{object.provincia}}</li> 
+                <li class="list-group-item"><strong>Cuit: </strong>{{object.cuit}}</li>                   
             </ul>
+        </div>
+    </div>
 
-           <a href = "{% url "tienda:consorcio_list" %}"><h1 style="color: blue; text-align: center;">Volver</h1></a>
-
-    </form>
-    <a href="{% url 'tienda:consorcio_detail' %}"> <button> Agregar Gasto </button></a>
+    <div class="text-center mt-4">
+        <a href="{% url 'tienda:listar_gastos' object.pk %}" class="btn btn-primary me-2">
+            <i class="fas fa-money-bill"></i> GASTOS
+        </a>
+        <a href="{% url 'tienda:descargar_pdf' object.pk %}" class="btn btn-success me-2">
+            <i class="fas fa-file-pdf"></i> DATOS (PDF)
+        </a>
+        <a href="{% url 'tienda:consorcio_list' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+</div>
 {% endblock contenido %}

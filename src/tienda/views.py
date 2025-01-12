@@ -10,15 +10,11 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import  get_object_or_404
-from .models import Proveedor
-from .forms import ProveedorForm
+from .models import Proveedor, Consorcio, Gastos
+from .forms import ProveedorForm, GastosForm, CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm, UnidadesForm
+from .models import Unidades 
 from django.template.loader import render_to_string
 from weasyprint import HTML
-from .models import Gastos
-
-
-from .forms import CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm, UnidadesForm
-from .models import Unidades 
 # Create your views here.
 @login_not_required 
 def index(request):
@@ -140,40 +136,51 @@ def eliminar_proveedor(request, pk):
         return redirect('tienda:lista_proveedores')
     return render(request, 'tienda/proveedores/eliminar_proveedor.html', {'proveedor': proveedor})
 
-def crear_gasto(request, rubro):
+def listar_gastos(request, pk):
+    consorcio = get_object_or_404(Consorcio, pk=pk)
+    gastos = Gastos.objects.filter(consorcio=consorcio)
+    return render(request, 'tienda/datos/listar_gastos.html', {
+        'gastos': gastos, 
+        'consorcio': consorcio
+    })
+
+def crear_gasto(request, pk):
+    consorcio = get_object_or_404(Consorcio, pk=pk)
     if request.method == 'POST':
         form = GastosForm(request.POST)
         if form.is_valid():
             gasto = form.save(commit=False)
-            gasto.rubro = rubro
+            gasto.consorcio = consorcio
             gasto.save()
-            return redirect('listar_gastos', rubro=rubro)
+            return redirect('tienda:listar_gastos', pk=pk)
     else:
         form = GastosForm()
-    return render(request, 'tienda/gastos_form.html', {'form': form, 'rubro': rubro})
+    return render(request, 'tienda/datos/gastos_form.html', {
+        'form': form, 
+        'consorcio': consorcio
+    })
 
+def descargar_pdf(request, pk):
+    # Obtener el consorcio y sus gastos
+    consorcio = get_object_or_404(Consorcio, pk=pk)
+    gastos = Gastos.objects.filter(consorcio=consorcio)
 
-def listar_gastos(request, rubro):
-    gastos = Gastos.objects.filter(rubro=rubro)
-    return render(request, 'tienda/listar_gastos.html', {'gastos': gastos, 'rubro': rubro})
-
-def descargar_pdf(request, rubro):
-    # Obtener los gastos del rubro específico
-    gastos = Gastos.objects.filter(columna=rubro)
-
-    # Si no hay gastos, puedes devolver un mensaje o un PDF vacío
+    # Si no hay gastos, devolver un mensaje
     if not gastos.exists():
-        return HttpResponse("No hay gastos para este rubro.", content_type="text/plain")
+        return HttpResponse(f"No hay gastos registrados para el consorcio {consorcio.clave_del_consorcio}.", 
+                          content_type="text/plain")
 
     # Renderizar la plantilla HTML con los gastos
-    html_string = render_to_string('tienda/pdf_gastos.html', {'gastos': gastos, 'rubro': rubro})
+    html_string = render_to_string('tienda/datos/pdf_gastos.html', {
+        'gastos': gastos, 
+        'consorcio': consorcio
+    })
 
     # Convertir la plantilla HTML en un PDF con WeasyPrint
     pdf_file = HTML(string=html_string).write_pdf()
 
     # Configurar la respuesta HTTP para descargar el archivo PDF
     response = HttpResponse(pdf_file, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="gastos_rubro_{rubro}.pdf"'
+    response['Content-Disposition'] = f'attachment; filename="gastos_consorcio_{consorcio.clave_del_consorcio}.pdf"'
 
     return response
-

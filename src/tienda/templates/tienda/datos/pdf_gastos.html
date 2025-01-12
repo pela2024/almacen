@@ -3,14 +3,22 @@
 {% load static %}
 {% block contenido %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Gastos Rubro {{ rubro }}</title>
     <style>
+        @page {
+            size: letter portrait;
+            margin: 2.5cm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
         th, td {
             border: 1px solid black;
@@ -19,6 +27,10 @@
         }
         th {
             background-color: #f2f2f2;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
         }
     </style>
 </head>
@@ -52,4 +64,3 @@
 </html>
    
 {% endblock contenido %}
-    

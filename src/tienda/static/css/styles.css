@@ -85,7 +85,7 @@ tr:nth-child(even) {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #10474b;  /* Contenedor principal en blanco */
+    background-color: #b8f4f8a9;  /* Contenedor principal en blanco */
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
     border-radius: 8px;
     margin-top: 20px;

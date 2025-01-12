@@ -86,9 +86,14 @@ class ProveedorForm(forms.ModelForm):
         fields = ['razon_social', 'cuit', 'actividad', "rubro"]
 
 
-
 class GastosForm(forms.ModelForm):
     class Meta:
         model = Gastos
-        fields = ['proveedor', 'factura', 'concepto', 'columna', 'importe', 'rubro']
-
+        fields = ['proveedor', 'factura', 'concepto', 'columna', 'importe']
+        widgets = {
+            'proveedor': forms.Select(attrs={'class': 'form-control'}),
+            'factura': forms.TextInput(attrs={'class': 'form-control'}),
+            'concepto': forms.TextInput(attrs={'class': 'form-control'}),
+            'columna': forms.TextInput(attrs={'class': 'form-control'}),
+            'importe': forms.NumberInput(attrs={'class': 'form-control'}),
+        }

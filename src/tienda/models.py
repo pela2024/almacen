@@ -65,15 +65,18 @@ class Proveedor(models.Model):
 from django.db import models
 
 class Gastos(models.Model):
-    RUBROS_CHOICES = [(i, f'Rubro {i}') for i in range(1, 11)]
-
-    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE, related_name='gastos')
+    consorcio = models.ForeignKey(Consorcio, on_delete=models.CASCADE, related_name='gastos', null=True)
+    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE, related_name='gastos_proveedor')
     factura = models.CharField(max_length=12)
     concepto = models.CharField(max_length=1000)
     columna = models.CharField(max_length=150)
     importe = models.DecimalField(max_digits=8, decimal_places=2)
-    rubro = models.IntegerField(choices=RUBROS_CHOICES)
+    fecha = models.DateField(auto_now_add=True, null=True)
+
+    class Meta:
+        verbose_name = 'gasto'
+        verbose_name_plural = 'gastos'
+        ordering = ['-fecha']
 
     def __str__(self):
-        return f"Gasto {self.factura} - {self.proveedor.razon_social}"
-
+        return f"{self.consorcio} - {self.proveedor} - {self.factura}"
