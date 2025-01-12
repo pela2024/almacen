@@ -61,3 +61,9 @@ urlpatterns += [
     path('proveedores/editar/<int:pk>/', views.editar_proveedor, name='editar_proveedor'),
     path('proveedores/eliminar/<int:pk>/', views.eliminar_proveedor, name='eliminar_proveedor'),
 ]
+
+urlpatterns = [
+    path('gastos/<int:rubro>/', views.listar_gastos, name='listar_gastos'),
+    path('gastos/<int:rubro>/nuevo/', views.crear_gasto, name='crear_gasto'),
+    path('gastos/<int:rubro>/pdf/', views.descargar_pdf, name='descargar_pdf'),
+]

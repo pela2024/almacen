@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #f0f7fa;  /* Fondo general más azulado y visible */
+    background-color: #c06135;  /* Fondo general más azulado y visible */
     color: var(--text-color);
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
@@ -85,7 +85,7 @@ tr:nth-child(even) {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #ffffff;  /* Contenedor principal en blanco */
+    background-color: #10474b;  /* Contenedor principal en blanco */
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
     border-radius: 8px;
     margin-top: 20px;

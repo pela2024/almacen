@@ -3,7 +3,7 @@ from .models import Consorcio, Liquidacion, Unidades, Propietario
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from .models import Proveedor
-
+from .models import Gastos
 
 class CustomAuthenticationForm(AuthenticationForm):
     class Meta:
@@ -84,3 +84,11 @@ class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
         fields = ['razon_social', 'cuit', 'actividad', "rubro"]
+
+
+
+class GastosForm(forms.ModelForm):
+    class Meta:
+        model = Gastos
+        fields = ['proveedor', 'factura', 'concepto', 'columna', 'importe', 'rubro']
+

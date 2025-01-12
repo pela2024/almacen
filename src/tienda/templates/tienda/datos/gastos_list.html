@@ -1,0 +1,58 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+{% block contenido %}
+<h1>Gastos - Rubro {{ rubro }}</h1>
+<a href="{% url 'crear_gasto' rubro=rubro %}">Agregar Gasto</a>
+<a href="{% url 'descargar_pdf' rubro=rubro %}">Descargar PDF</a>
+<table>
+    <thead>
+        <tr>
+            <th>Proveedor</th>
+            <th>Factura</th>
+            <th>Concepto</th>
+            <th>Columna</th>
+            <th>Importe</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for gasto in gastos %}
+        <tr>
+            <td>{{ gasto.proveedor }}</td>
+            <td>{{ gasto.factura }}</td>
+            <td>{{ gasto.concepto }}</td>
+            <td>{{ gasto.columna }}</td>
+            <td>{{ gasto.importe }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% load static %}    
+{% endblock contenido %}
+<h1>Gastos - Rubro {{ rubro }}</h1>
+<a href="{% url 'crear_gasto' rubro=rubro %}">Agregar Gasto</a>
+<a href="{% url 'descargar_pdf' rubro=rubro %}">Descargar PDF</a>
+<table>
+    <thead>
+        <tr>
+            <th>Proveedor</th>
+            <th>Factura</th>
+            <th>Concepto</th>
+            <th>Columna</th>
+            <th>Importe</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for gasto in gastos %}
+        <tr>
+            <td>{{ gasto.proveedor }}</td>
+            <td>{{ gasto.factura }}</td>
+            <td>{{ gasto.concepto }}</td>
+            <td>{{ gasto.columna }}</td>
+            <td>{{ gasto.importe }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+

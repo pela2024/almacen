@@ -3,12 +3,11 @@
 
 {% block contenido %}
     <main >
-    
-        <body>
+        <body >
             <img src="{% static "tienda/imagenes/logo2.jpg" %}" alt="" style="width: 180px ;height:90px;">
             <h1>Bienvenidos a la plataforma <br> para administradores de consorcios </h1>          
     </body>
-        <div>
+        <div >
             {% if user.is_authenticated %}
                 <a href="{% url 'tienda:consorcio_list' %}"><button> Consorcios</button> </a>
                 <a href="{% url 'tienda:liquidacion_list' %}"><button> Liquidaciones</button> </a>

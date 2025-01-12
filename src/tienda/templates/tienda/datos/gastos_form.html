@@ -1,0 +1,13 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+
+{% block contenido %}
+    
+
+<h1>Agregar Gasto - Rubro {{ rubro }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+{% endblock contenido %}

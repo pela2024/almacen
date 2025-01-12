@@ -61,3 +61,19 @@ class Proveedor(models.Model):
 
     def __str__(self):
         return f"{self.razon_social} - {self.cuit}"
+
+from django.db import models
+
+class Gastos(models.Model):
+    RUBROS_CHOICES = [(i, f'Rubro {i}') for i in range(1, 11)]
+
+    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE, related_name='gastos')
+    factura = models.CharField(max_length=12)
+    concepto = models.CharField(max_length=1000)
+    columna = models.CharField(max_length=150)
+    importe = models.DecimalField(max_digits=8, decimal_places=2)
+    rubro = models.IntegerField(choices=RUBROS_CHOICES)
+
+    def __str__(self):
+        return f"Gasto {self.factura} - {self.proveedor.razon_social}"
+

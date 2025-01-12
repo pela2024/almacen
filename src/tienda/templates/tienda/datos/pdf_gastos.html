@@ -1,0 +1,55 @@
+{% extends 'tienda/base.html' %}
+
+{% load static %}
+{% block contenido %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gastos Rubro {{ rubro }}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gastos - Rubro {{ rubro }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Proveedor</th>
+                <th>Factura</th>
+                <th>Concepto</th>
+                <th>Columna</th>
+                <th>Importe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gasto in gastos %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ gasto.proveedor }}</td>
+                <td>{{ gasto.factura }}</td>
+                <td>{{ gasto.concepto }}</td>
+                <td>{{ gasto.columna }}</td>
+                <td>${{ gasto.importe }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+   
+{% endblock contenido %}
+    
