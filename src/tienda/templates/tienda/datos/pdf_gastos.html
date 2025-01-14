@@ -1,12 +1,11 @@
 {% extends 'tienda/base.html' %}
-
 {% load static %}
 {% block contenido %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Liquidacion de expnesas </title>
+    <title>Liquidación de Expensas - {{ periodo }}</title>
     <style>
         @page {
             size: letter portrait;
@@ -31,15 +30,54 @@
         h1 {
             color: #333;
             text-align: center;
+            margin-bottom: 10px;
+        }
+        .info-section {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .info-box {
+            width: 48%;
+            border: 1px solid black;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .info-box h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Gastos - Rubro {{ rubro }}</h1>
+    <h1>Liquidación de Expensas - {{ periodo }}</h1>
+
+    <!-- Información de administración y consorcio -->
+    <div class="info-section">
+        <div class="info-box">
+            <h2>Administración</h2>
+            <p><strong>Razón Social:</strong> {{ administracion.razon_social }}</p>
+            <p><strong>CUIT:</strong> {{ administracion.cuit }}</p>
+            <p><strong>Dirección:</strong> {{ administracion.direccion }}</p>
+            <p><strong>Teléfono:</strong> {{ administracion.telefono }}</p>
+        </div>
+        <div class="info-box">
+            <h2>Consorcio</h2>
+            <p><strong>Nombre:</strong> {{ consorcio.nombre }}</p>
+            <p><strong>CUIT:</strong> {{ consorcio.cuit }}</p>
+            <p><strong>Dirección:</strong> {{ consorcio.direccion }}</p>
+        </div>
+    </div>
+
+    <!-- Tabla de gastos -->
     <table>
         <thead>
             <tr>
-                <th>rubro</th>
+                <th>#</th>
                 <th>Proveedor</th>
                 <th>Factura</th>
                 <th>Concepto</th>
@@ -62,5 +100,4 @@
     </table>
 </body>
 </html>
-   
 {% endblock contenido %}

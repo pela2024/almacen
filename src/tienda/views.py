@@ -184,3 +184,25 @@ def descargar_pdf(request, pk):
     response['Content-Disposition'] = f'attachment; filename="gastos_consorcio_{consorcio.clave_del_consorcio}.pdf"'
 
     return response
+def generar_pdf(request):
+    administracion = {
+        "razon_social": "Administración Gresia",
+        "cuit": "20-25284237-4",
+        "direccion": "Santiago del Estero 366 piso 3 oficina 36",
+        "telefono": "11 4096 6227"
+    }
+    consorcio = {
+        "nombre": "Consorcio Edificio XYZ",
+        "cuit": "20-87654321-0",
+        "direccion": "Av. Siempreviva 742"
+    }
+    gastos = Gastos.objects.all()  # Filtra según corresponda
+    periodo = "Enero 2025"
+
+    context = {
+        "administracion": administracion,
+        "consorcio": consorcio,
+        "gastos": gastos,
+        "periodo": periodo
+    }
+    return render(request, "tienda:pdf_gastos.html", context)
