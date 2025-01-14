@@ -14,7 +14,15 @@ from .models import Proveedor, Consorcio, Gastos
 from .forms import ProveedorForm, GastosForm, CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm, UnidadesForm
 from .models import Unidades 
 from django.template.loader import render_to_string
-from weasyprint import HTML
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+
+
+
+
 # Create your views here.
 @login_not_required 
 def index(request):
@@ -136,13 +144,17 @@ def eliminar_proveedor(request, pk):
         return redirect('tienda:lista_proveedores')
     return render(request, 'tienda/proveedores/eliminar_proveedor.html', {'proveedor': proveedor})
 
+
+
+
 def listar_gastos(request, pk):
     consorcio = get_object_or_404(Consorcio, pk=pk)
     gastos = Gastos.objects.filter(consorcio=consorcio)
     return render(request, 'tienda/datos/listar_gastos.html', {
-        'gastos': gastos, 
+        'gastos': gastos,
         'consorcio': consorcio
     })
+
 
 def crear_gasto(request, pk):
     consorcio = get_object_or_404(Consorcio, pk=pk)
@@ -156,53 +168,135 @@ def crear_gasto(request, pk):
     else:
         form = GastosForm()
     return render(request, 'tienda/datos/gastos_form.html', {
-        'form': form, 
+        'form': form,
         'consorcio': consorcio
     })
+
 
 def descargar_pdf(request, pk):
-    # Obtener el consorcio y sus gastos
     consorcio = get_object_or_404(Consorcio, pk=pk)
-    gastos = Gastos.objects.filter(consorcio=consorcio)
+    gastos = Gastos.objects.filter(consorcio=consorcio).order_by('rubro')
 
-    # Si no hay gastos, devolver un mensaje
-    if not gastos.exists():
-        return HttpResponse(f"No hay gastos registrados para el consorcio {consorcio.clave_del_consorcio}.", 
-                          content_type="text/plain")
+    # Crear respuesta HTTP para el PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="gastos_{consorcio.clave_del_consorcio}.pdf"'
 
-    # Renderizar la plantilla HTML con los gastos
-    html_string = render_to_string('tienda/datos/pdf_gastos.html', {
-        'gastos': gastos, 
-        'consorcio': consorcio
-    })
+    # Crear documento PDF
+    pdf = SimpleDocTemplate(response, pagesize=letter)
 
-    # Convertir la plantilla HTML en un PDF con WeasyPrint
-    pdf_file = HTML(string=html_string).write_pdf()
+    # Encabezado del documento
+    titulo = f"Gastos - Consorcio {consorcio.domicilio}"
+    elementos = []
 
-    # Configurar la respuesta HTTP para descargar el archivo PDF
-    response = HttpResponse(pdf_file, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="gastos_consorcio_{consorcio.clave_del_consorcio}.pdf"'
+    # Agregar título
+    styles = getSampleStyleSheet()
+    elementos.append(Paragraph(titulo, styles['Title']))
+    elementos.append(Spacer(1, 20))  # Espacio debajo del título
+
+    # Agrupar gastos por rubro
+    rubros = {}
+    for gasto in gastos:
+        if gasto.rubro not in rubros:
+            rubros[gasto.rubro] = []
+        rubros[gasto.rubro].append(gasto)
+
+    total_general = 0  # Para calcular el total de todos los rubros
+
+    for rubro, lista_gastos in rubros.items():
+        # Agregar un subtítulo con el nombre del rubro
+        elementos.append(Paragraph(f"Rubro {rubro}", styles['Heading2']))
+
+        # Crear datos de la tabla
+        data = [
+            ['Proveedor', 'Factura', 'Concepto', 'Columna', 'Importe'],  # Encabezado
+        ]
+        total_rubro = 0  # Total del rubro
+        for gasto in lista_gastos:
+            data.append([
+                gasto.proveedor,
+                gasto.factura,
+                gasto.concepto,
+                gasto.columna,
+                f"${gasto.importe}",
+            ])
+            total_rubro += gasto.importe  # Sumar el importe al total del rubro
+
+        # Agregar fila de total por rubro
+        data.append(['', '', '', 'Total', f"${total_rubro}"])
+
+        # Crear la tabla del rubro
+        table = Table(data)
+        style = TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.greenyellow),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ])
+        table.setStyle(style)
+
+        # Agregar la tabla y un espacio debajo
+        elementos.append(table)
+        elementos.append(Spacer(1, 20))
+
+        # Sumar el total del rubro al total general
+        total_general += total_rubro
+
+    # Agregar total general al final
+    elementos.append(Paragraph("Total General", styles['Heading2']))
+    elementos.append(Paragraph(f"${total_general}", styles['Normal']))
+
+    # Construir el PDF
+    pdf.build(elementos)
 
     return response
-def generar_pdf(request):
-    administracion = {
-        "razon_social": "Administración Gresia",
-        "cuit": "20-25284237-4",
-        "direccion": "Santiago del Estero 366 piso 3 oficina 36",
-        "telefono": "11 4096 6227"
-    }
-    consorcio = {
-        "nombre": "Consorcio Edificio XYZ",
-        "cuit": "20-87654321-0",
-        "direccion": "Av. Siempreviva 742"
-    }
-    gastos = Gastos.objects.all()  # Filtra según corresponda
-    periodo = "Enero 2025"
 
-    context = {
-        "administracion": administracion,
-        "consorcio": consorcio,
-        "gastos": gastos,
-        "periodo": periodo
-    }
-    return render(request, "tienda:pdf_gastos.html", context)
+
+
+def generar_pdf(request):
+    # Configurar la respuesta HTTP como un archivo PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="liquidacion.pdf"'
+
+    # Crear un lienzo PDF
+    c = canvas.Canvas(response, pagesize=letter)
+    c.setFont("Helvetica", 12)
+
+    # Título
+    c.drawString(100, 750, "Liquidación de Expensas")
+    
+    # Datos de la administración y el consorcio
+    c.drawString(50, 700, "Administración: Gresia")
+    c.drawString(50, 680, "Dirección: Santiago del Estero 366 piso 3 oficina 36")
+    c.drawString(50, 660, "CUIT: 20-25284237-4")
+    
+    c.drawString(300, 700, "Consorcio:")
+    c.drawString(300, 680, "Dirección: Calle Falsa 456")
+    c.drawString(300, 660, "CUIT: 33-87654321-0")
+    
+    # Tabla de gastos
+    c.drawString(50, 620, "Detalle de Gastos:")
+    y = 600
+    headers = ["Proveedor", "Factura", "Concepto", "Importe"]
+    for i, header in enumerate(headers):
+        c.drawString(50 + (i * 100), y, header)
+    y -= 20
+    
+    # Agregar datos (reemplaza con datos reales)
+    gastos = [
+        {"proveedor": "Proveedor 1", "factura": "001", "concepto": "Servicio", "importe": 1000.0},
+        {"proveedor": "Proveedor 2", "factura": "002", "concepto": "Materiales", "importe": 500.0},
+    ]
+    for gasto in gastos:
+        c.drawString(50, y, gasto["proveedor"])
+        c.drawString(150, y, gasto["factura"])
+        c.drawString(250, y, gasto["concepto"])
+        c.drawString(350, y, f"${gasto['importe']}")
+        y -= 20
+
+    # Finalizar PDF
+    c.save()
+    return response
+

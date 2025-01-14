@@ -72,6 +72,7 @@ class Gastos(models.Model):
     columna = models.CharField(max_length=150)
     importe = models.DecimalField(max_digits=8, decimal_places=2)
     fecha = models.DateField(auto_now_add=True, null=True)
+    rubro = models.IntegerField()  # Este sería el campo de rubro
 
     class Meta:
         verbose_name = 'gasto'

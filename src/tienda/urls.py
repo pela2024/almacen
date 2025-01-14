@@ -3,6 +3,8 @@ from django.contrib.auth.views import LogoutView
 from .views import admin_dashboard_view, propietario_dashboard_view
 from tienda.views_models import consorcio, liquidacion
 from . import views 
+from django.conf import settings
+from django.conf.urls.static import static
 from django.http import HttpResponse
 from .views_models.propietario import (
     LiquidacionesPropietarioListView, 
@@ -57,3 +59,7 @@ urlpatterns = [
     path('proveedores/editar/<int:pk>/', views.editar_proveedor, name='editar_proveedor'),
     path('proveedores/eliminar/<int:pk>/', views.eliminar_proveedor, name='eliminar_proveedor'),
 ]
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
