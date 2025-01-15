@@ -2,16 +2,16 @@
 
 {% block contenido %}
 <div class="container">
-    <h1 class="text-center mb-4">Consorcio - Vista en detalle</h1>
-    
+    <h1 class="text-center mb-4">Consorcio {{ object.domicilio }}</h1>
+
     <div class="card">
         <div class="card-body">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Clave del Consorcio: </strong>{{object.clave_del_consorcio}}</li> 
-                <li class="list-group-item"><strong>Domicilio: </strong>{{object.domicilio}}</li> 
-                <li class="list-group-item"><strong>Localidad: </strong>{{object.localidad}}</li>  
-                <li class="list-group-item"><strong>Provincia: </strong>{{object.provincia}}</li> 
-                <li class="list-group-item"><strong>Cuit: </strong>{{object.cuit}}</li>                   
+                <li class="list-group-item"><strong>Clave del Consorcio: </strong>{{ object.clave_del_consorcio }}</li> 
+                <li class="list-group-item"><strong>Domicilio: </strong>{{ object.domicilio }}</li> 
+                <li class="list-group-item"><strong>Localidad: </strong>{{ object.localidad }}</li>  
+                <li class="list-group-item"><strong>Provincia: </strong>{{ object.provincia }}</li> 
+                <li class="list-group-item"><strong>Cuit: </strong>{{ object.cuit }}</li>                   
             </ul>
         </div>
     </div>
@@ -26,6 +26,16 @@
         <a href="{% url 'tienda:consorcio_list' %}" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Volver
         </a>
+
+        <!-- Menú desplegable -->
+        <div class="dropdown">
+            <button class="dropdown-button">Otros Consorcios</button>
+            <ul class="dropdown-menu">
+                {% for consorcio in otros_consorcios %}
+                    <li><a href="{% url 'tienda:consorcio_detail' consorcio.pk %}">{{ consorcio.domicilio }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock contenido %}
