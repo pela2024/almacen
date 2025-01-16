@@ -71,13 +71,12 @@ class Gastos(models.Model):
     concepto = models.CharField(max_length=1000)
     columna = models.CharField(max_length=150)
     importe = models.DecimalField(max_digits=8, decimal_places=2)
-    fecha = models.DateField(auto_now_add=True, null=True)
     rubro = models.IntegerField()  # Este sería el campo de rubro
 
     class Meta:
         verbose_name = 'gasto'
         verbose_name_plural = 'gastos'
-        ordering = ['-fecha']
+        
 
     def __str__(self):
         return f"{self.consorcio} - {self.proveedor} - {self.factura}"

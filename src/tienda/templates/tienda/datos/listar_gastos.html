@@ -26,8 +26,7 @@
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th>#</th>
-                    <th>Fecha</th>
+                    <th>rubro</th>
                     <th>Proveedor</th>
                     <th>Factura</th>
                     <th>Concepto</th>
@@ -39,7 +38,6 @@
                 {% for gasto in gastos %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ gasto.fecha|date:"d/m/Y" }}</td>
                     <td>{{ gasto.proveedor }}</td>
                     <td>{{ gasto.factura }}</td>
                     <td>{{ gasto.concepto }}</td>

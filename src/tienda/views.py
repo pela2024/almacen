@@ -185,7 +185,7 @@ def descargar_pdf(request, pk):
     pdf = SimpleDocTemplate(response, pagesize=letter)
 
     # Encabezado del documento
-    titulo = f"Gastos - Consorcio {consorcio.domicilio}"
+    titulo = f"Liquidacion - Consorcio {consorcio.domicilio}"
     elementos = []
 
     # Agregar título
