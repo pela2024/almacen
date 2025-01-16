@@ -3,12 +3,20 @@
 {% block contenido %}
 <h1>Lista de Consorcios</h1>
 
-<a href="{% url 'tienda:consorcio_create' %}">
-    <button>Agregar Nuevo Consorcio</button>
+<!-- Botón para agregar una nueva liquidación -->
+<a href="{% url 'tienda:liquidacion_create' %}">
+    <button>Agregar Liquidación</button>
 </a>
-<a href="{% url 'tienda:index' %}">
-    <h1>Inicio</h1>
-</a>
+
+<!-- Menú desplegable -->
+<div class="dropdown">
+    <button class="dropdown-button">Otros Consorcios</button>
+    <ul class="dropdown-menu">
+        {% for consorcio in otros_consorcios %}
+            <li><a href="{% url 'tienda:consorcio_detail' consorcio.pk %}">{{ consorcio.domicilio }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 
 <table border="2" style="color: brown; text-align: justify;">
     <thead>
@@ -33,16 +41,17 @@
                 <td>
                     {% with consorcio.liquidacion_set.last as ultima_liquidacion %}
                         {% if ultima_liquidacion %}
-                            {{ ultima_liquidacion.periodo }}
+                            <a href="{% url 'tienda:liquidacion_detail' ultima_liquidacion.pk %}">
+                                {{ ultima_liquidacion.periodo }}
+                            </a>
                         {% else %}
                             No hay liquidaciones
                         {% endif %}
                     {% endwith %}
                 </td>
-                
-                <td>
-                    <a href="{% url 'tienda:consorcio_update' consorcio.id %}">
-                        <button>Editar</button>
+                    <!-- Botón para agregar una nueva liquidación al consorcio -->
+                    <a href="{% url 'tienda:liquidacion_create' consorcio.id %}">
+                        <button>Agregar Liquidación</button>
                     </a>
                 </td>
             </tr>

@@ -26,8 +26,8 @@
         <br>
         <button type="submit">Iniciar Sesión</button>
     </form>
-    <p>
-        ¿no tienes una cuenta? <a href="{% url 'tienda:register' %}">  Registrese aqui !</a>
+    <p style="color: black; ">
+        ¿no tienes una cuenta? <a  href="{% url 'tienda:register' %}  ">  Registrese aqui !</a>
 
     </p>
     {% if messages %}
@@ -35,6 +35,13 @@
             <p style="color: red;">{{ message }}</p>
         {% endfor %}
     {% endif %}
+    <img src="{% static "tienda/imagenes/edificio.jpg" %}" alt="" " style="width:25%;height:25;">
+    <div>
+        <img src="{% static 'tienda/imagenes/pagof.png' %}" alt="" " style="width:60px;height:60px;">
+        <img src="{% static 'tienda/imagenes/banelco.png' %}"alt="" " style="width:60px;height:60px;">
+        <img src="{% static 'tienda/imagenes/pagomisc.png' %}"alt="" " style="width:90px;height:90px;">
+    </div>
+
 </body>
 </html>
 {% endblock contenido %}
