@@ -1,7 +1,7 @@
 from django.http import HttpRequest , HttpResponse
 from django.shortcuts import redirect, render
-from .models import Consorcio
-from .forms import ConsorcioForm
+from tienda.models import Consorcio
+from tienda.forms import ConsorcioForm
 from django.shortcuts import  get_object_or_404
 
 
