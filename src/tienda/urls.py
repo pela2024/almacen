@@ -37,7 +37,7 @@ urlpatterns = [
     
     # URLs de Liquidación
     path("liquidacion/list/", liquidacion.LiquidacionListView.as_view(), name="liquidacion_list"),
-    path('liquidacion/create/<int:consorcio_id>/', views.LiquidacionCreateView.as_view(), name='liquidacion_create'),
+    path('liquidacion/create/<int:consorcio_id>/', liquidacion.LiquidacionCreateView.as_view(), name='liquidacion_create'),
     path("liquidacion/update/<int:pk>", liquidacion.LiquidacionUpdateView.as_view(), name="liquidacion_update"),
     path("liquidacion/detail/<int:pk>", liquidacion.LiquidacionDetailView.as_view(), name="liquidacion_detail"),
     
