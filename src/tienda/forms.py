@@ -11,8 +11,13 @@ class CustomAuthenticationForm(AuthenticationForm):
         model= AuthenticationForm
         fields = ["username", " password"]
 
+        
 class CustomRegistroUsuarioForm(UserCreationForm):
-    clave_del_consorcio = forms.CharField(max_length=255, required=True, label="Clave del Consorcio")
+    clave_del_consorcio = forms.CharField(
+        max_length=255, 
+        required=True, 
+        label="Clave del Consorcio"
+    )
 
     class Meta:
         model = Usuario
@@ -24,14 +29,16 @@ class CustomRegistroUsuarioForm(UserCreationForm):
             consorcio = Consorcio.objects.get(clave_del_consorcio=clave)
         except Consorcio.DoesNotExist:
             raise forms.ValidationError("La clave del consorcio no es válida.")
-        return consorcio
+        return consorcio  # Devuelve el objeto Consorcio
 
     def save(self, commit=True):
         user = super().save(commit=False)
+        # Asigna el objeto Consorcio al campo `consorcio` del usuario
         user.consorcio = self.cleaned_data.get("clave_del_consorcio")
         if commit:
             user.save()
         return user
+
 
 class ConsorcioForm(forms.ModelForm):
     class Meta:

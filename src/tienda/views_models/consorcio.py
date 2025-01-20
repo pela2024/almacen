@@ -4,7 +4,7 @@ from django.http import HttpResponseForbidden
 from tienda.models import Consorcio
 from tienda.forms import ConsorcioForm
 from django.shortcuts import  get_object_or_404
-from tienda.utils import verificar_consorcio
+from functools import wraps
 
 
 ### CONSORCIO - LIST VIEW 
@@ -14,20 +14,15 @@ def consorcio_list(request):
     return render(request, 'tienda/consorcios_list.html', {'object_list': consorcios})
 
 
-@verificar_consorcio
-def detalle_consorcio(request, pk):
-    consorcio = get_object_or_404(Consorcio, pk=pk)
-    # Verificar si el usuario pertenece al consorcio
-    if request.user.consorcio != consorcio:
-        return HttpResponseForbidden("No tienes permiso para acceder a este consorcio.")
-    liquidaciones = consorcio.liquidacion_set.all()
-    ultima_liquidacion = liquidaciones.last() if liquidaciones.exists() else None
-   
-    return render(request, 'tienda/detalle_consorcio.html', {
-        'consorcio': consorcio,
-        'liquidaciones': liquidaciones,
-        'ultima_liquidacion': ultima_liquidacion
-    })
+def verificar_consorcio(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        consorcio_id = kwargs.get('pk')
+        consorcio = get_object_or_404(Consorcio, pk=consorcio_id)
+        if request.user.consorcio != consorcio:
+            return HttpResponseForbidden("No tienes permiso para acceder a este consorcio.")
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
 
 
 #### CONSORCIO - CREATE VIEW 

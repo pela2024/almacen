@@ -12,29 +12,29 @@ class Consorcio(models.Model):
     def __str__(self):
         return self.domicilio
 
+from django.contrib.auth.models import AbstractUser, Group, Permission
+
 class Usuario(AbstractUser):
     consorcio = models.ForeignKey(
-        'Consorcio',  # Asegúrate de que el modelo Consorcio esté registrado antes
+        'Consorcio',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="usuarios"
     )
-
-    # Ajustes para evitar conflictos con auth.User
     groups = models.ManyToManyField(
-        'auth.Group',
-        related_name='custom_user_set',  # Cambiar el nombre de la relación inversa
+        Group,
+        related_name='usuario_set',
         blank=True,
-        help_text='Los grupos a los que pertenece este usuario.',
-        verbose_name='grupos'
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        verbose_name='groups'
     )
     user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        related_name='custom_user_permissions_set',  # Cambiar el nombre de la relación inversa
+        Permission,
+        related_name='usuario_set',
         blank=True,
-        help_text='Permisos específicos para este usuario.',
-        verbose_name='permisos de usuario'
+        help_text='Specific permissions for this user.',
+        verbose_name='user permissions'
     )
 
     def __str__(self):

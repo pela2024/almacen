@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "tienda",
-]
+
+
+
+]  # Reemplaza 'mi_app' por el nombre de tu aplicación
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
