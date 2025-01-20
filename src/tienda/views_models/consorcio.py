@@ -7,9 +7,7 @@ from django.shortcuts import  get_object_or_404
 from tienda.utils import verificar_consorcio
 
 
-
 ### CONSORCIO - LIST VIEW 
-
 
 def consorcio_list(request):
     consorcios = Consorcio.objects.all()

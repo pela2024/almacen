@@ -14,15 +14,32 @@ class Consorcio(models.Model):
 
 class Usuario(AbstractUser):
     consorcio = models.ForeignKey(
-        Consorcio, 
-        on_delete=models.SET_NULL, 
-        null=True, 
+        'Consorcio',  # Asegúrate de que el modelo Consorcio esté registrado antes
+        on_delete=models.SET_NULL,
+        null=True,
         blank=True,
         related_name="usuarios"
     )
 
+    # Ajustes para evitar conflictos con auth.User
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='custom_user_set',  # Cambiar el nombre de la relación inversa
+        blank=True,
+        help_text='Los grupos a los que pertenece este usuario.',
+        verbose_name='grupos'
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='custom_user_permissions_set',  # Cambiar el nombre de la relación inversa
+        blank=True,
+        help_text='Permisos específicos para este usuario.',
+        verbose_name='permisos de usuario'
+    )
+
     def __str__(self):
         return f"{self.username} ({self.consorcio})"
+
 
 class Liquidacion(models.Model):
     consorcio = models.ForeignKey(Consorcio, on_delete=models.SET_NULL, null=True)
