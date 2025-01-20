@@ -1,11 +1,16 @@
-{% extends 'tienda/base.html' %}
-
-{% block contenido %}
-<h1>Registro de usuario</h1>
-    <form method="POST">  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+</head>
+<body>
+    <h1>Registro de Usuario</h1>
+    <form method="post">
         {% csrf_token %}
-        {{form}}
-        <button type="submit"> Registrese</button>
-        <a href = "{% url "tienda:login" %}"><h1 style="color: blue; text-align: center;">Volver</h1></a>
+        {{ form.as_p }}
+        <button type="submit">Registrarse</button>
     </form>
-{% endblock contenido %}
+</body>
+</html>

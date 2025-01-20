@@ -1,9 +1,10 @@
 from django.http import HttpRequest , HttpResponse
 from django.shortcuts import redirect, render
+from django.http import HttpResponseForbidden
 from tienda.models import Consorcio
 from tienda.forms import ConsorcioForm
 from django.shortcuts import  get_object_or_404
-
+from tienda.utils import verificar_consorcio
 
 
 
@@ -14,10 +15,16 @@ def consorcio_list(request):
     consorcios = Consorcio.objects.all()
     return render(request, 'tienda/consorcios_list.html', {'object_list': consorcios})
 
+
+@verificar_consorcio
 def detalle_consorcio(request, pk):
     consorcio = get_object_or_404(Consorcio, pk=pk)
+    # Verificar si el usuario pertenece al consorcio
+    if request.user.consorcio != consorcio:
+        return HttpResponseForbidden("No tienes permiso para acceder a este consorcio.")
     liquidaciones = consorcio.liquidacion_set.all()
     ultima_liquidacion = liquidaciones.last() if liquidaciones.exists() else None
+   
     return render(request, 'tienda/detalle_consorcio.html', {
         'consorcio': consorcio,
         'liquidaciones': liquidaciones,

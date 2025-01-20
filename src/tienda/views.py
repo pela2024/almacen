@@ -20,9 +20,6 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 
-
-
-
 # Create your views here.
 @login_not_required 
 def index(request):
@@ -208,15 +205,14 @@ def descargar_pdf(request, pk):
 
         # Crear datos de la tabla
         data = [
-            ['Proveedor', 'Factura', 'Concepto', 'Columna', 'Importe'],  # Encabezado
+            [ 'Comprobante', 'Concepto', 'A', 'Importe'],  # Encabezado
         ]
         total_rubro = 0  # Total del rubro
         for gasto in lista_gastos:
             data.append([
-                gasto.proveedor,
-                gasto.factura,
+                gasto.comprobante,
                 gasto.concepto,
-                gasto.columna,
+                gasto.a,
                 f"${gasto.importe}",
             ])
             total_rubro += gasto.importe  # Sumar el importe al total del rubro
@@ -279,19 +275,19 @@ def generar_pdf(request):
     # Tabla de gastos
     c.drawString(50, 620, "Detalle de Gastos:")
     y = 600
-    headers = ["Proveedor", "Factura", "Concepto", "Importe"]
+    headers = [ "Comprobante", "Concepto", "Importe"]
     for i, header in enumerate(headers):
         c.drawString(50 + (i * 100), y, header)
     y -= 20
     
     # Agregar datos (reemplaza con datos reales)
     gastos = [
-        {"proveedor": "Proveedor 1", "factura": "001", "concepto": "Servicio", "importe": 1000.0},
-        {"proveedor": "Proveedor 2", "factura": "002", "concepto": "Materiales", "importe": 500.0},
+        { "comprobante": "001", "concepto": "Servicio", "importe": 1000.0},
+        { "comprobante": "002", "concepto": "Materiales", "importe": 500.0},
     ]
     for gasto in gastos:
-        c.drawString(50, y, gasto["proveedor"])
-        c.drawString(150, y, gasto["factura"])
+        
+        c.drawString(150, y, gasto["comprobante"])
         c.drawString(250, y, gasto["concepto"])
         c.drawString(350, y, f"${gasto['importe']}")
         y -= 20

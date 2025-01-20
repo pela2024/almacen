@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 class Consorcio(models.Model):
     clave_del_consorcio = models.CharField(max_length=255, default="valor_default")
@@ -10,6 +11,18 @@ class Consorcio(models.Model):
 
     def __str__(self):
         return self.domicilio
+
+class Usuario(AbstractUser):
+    consorcio = models.ForeignKey(
+        Consorcio, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True,
+        related_name="usuarios"
+    )
+
+    def __str__(self):
+        return f"{self.username} ({self.consorcio})"
 
 class Liquidacion(models.Model):
     consorcio = models.ForeignKey(Consorcio, on_delete=models.SET_NULL, null=True)
@@ -62,14 +75,11 @@ class Proveedor(models.Model):
     def __str__(self):
         return f"{self.razon_social} - {self.cuit}"
 
-from django.db import models
-
 class Gastos(models.Model):
-    consorcio = models.ForeignKey(Consorcio, on_delete=models.CASCADE, related_name='gastos', null=True)
-    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE, related_name='gastos_proveedor')
-    factura = models.CharField(max_length=22)
+    consorcio = models.ForeignKey(Consorcio, on_delete=models.CASCADE, related_name='gastos', null=True) 
+    comprobante = models.CharField(max_length=22)
     concepto = models.CharField(max_length=1000)
-    columna = models.CharField(max_length=150)
+    a = models.CharField(max_length=150)
     importe = models.DecimalField(max_digits=8, decimal_places=2)
     rubro = models.IntegerField()  # Este sería el campo de rubro
 
@@ -79,4 +89,4 @@ class Gastos(models.Model):
         
 
     def __str__(self):
-        return f"{self.consorcio} - {self.proveedor} - {self.factura}"
+        return f"{self.consorcio} - {self.comprobante} - {self.concepto}"

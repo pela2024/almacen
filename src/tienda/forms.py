@@ -1,26 +1,34 @@
 from django import forms
-from .models import Consorcio, Liquidacion, Unidades, Propietario
+from .models import Consorcio, Liquidacion, Unidades, Propietario, Usuario
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from .models import Proveedor
 from .models import Gastos
+
 
 class CustomAuthenticationForm(AuthenticationForm):
     class Meta:
         model= AuthenticationForm
         fields = ["username", " password"]
 
-
 class CustomRegistroUsuarioForm(UserCreationForm):
-    email = forms.EmailField(required=True)  # Campo de email obligatorio
+    clave_del_consorcio = forms.CharField(max_length=255, required=True, label="Clave del Consorcio")
 
     class Meta:
-        model = User  # Usamos el modelo de usuario predeterminado de Django
-        fields = ['username', 'email', 'password1', 'password2']  # Campos necesarios
+        model = Usuario
+        fields = ['username', 'email', 'clave_del_consorcio', 'password1', 'password2']
+
+    def clean_clave_del_consorcio(self):
+        clave = self.cleaned_data.get("clave_del_consorcio")
+        try:
+            consorcio = Consorcio.objects.get(clave_del_consorcio=clave)
+        except Consorcio.DoesNotExist:
+            raise forms.ValidationError("La clave del consorcio no es válida.")
+        return consorcio
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.email = self.cleaned_data['email']  # Guardar el email del usuario
+        user.consorcio = self.cleaned_data.get("clave_del_consorcio")
         if commit:
             user.save()
         return user
@@ -89,11 +97,10 @@ class ProveedorForm(forms.ModelForm):
 class GastosForm(forms.ModelForm):
     class Meta:
         model = Gastos
-        fields = ['proveedor', 'factura', 'concepto', 'columna', 'importe']
+        fields = [ 'comprobante', 'concepto', 'a', 'importe']
         widgets = {
-            'proveedor': forms.Select(attrs={'class': 'form-control'}),
-            'factura': forms.TextInput(attrs={'class': 'form-control'}),
+            'comprobante': forms.TextInput(attrs={'class': 'form-control'}),
             'concepto': forms.TextInput(attrs={'class': 'form-control'}),
-            'columna': forms.TextInput(attrs={'class': 'form-control'}),
+            'a': forms.TextInput(attrs={'class': 'form-control'}),
             'importe': forms.NumberInput(attrs={'class': 'form-control'}),
         }
