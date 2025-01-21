@@ -10,9 +10,9 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import  get_object_or_404
-from .models import Proveedor, Consorcio, Gastos
+from .models import Proveedor, Consorcio, Gastos, Unidades 
 from .forms import ProveedorForm, GastosForm, CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm, UnidadesForm
-from .models import Unidades 
+from .models import Administracion
 from django.template.loader import render_to_string
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -98,6 +98,20 @@ def admin_dashboard_view(request):
 def propietario_dashboard_view(request):
     return render(request, "tienda/propietario_dashboard.html")
 
+def liquidacion_expensas(request, periodo, consorcio_id):
+    # Obtener el consorcio y la administración
+    consorcio = Consorcio.objects.get(pk=consorcio_id)
+    administracion = Administracion.objects.first()  # O ajusta para obtener la administración correspondiente
+    
+    # Filtrar los gastos del consorcio
+    gastos = Gastos.objects.filter(consorcio=consorcio)
+    
+    return render(request, 'tienda/liquidacion_expensas.html', {
+        'periodo': periodo,
+        'administracion': administracion,
+        'consorcio': consorcio,
+        'gastos': gastos,
+    })
 
 def lista_proveedores(request):
     try:
@@ -161,7 +175,7 @@ def crear_gasto(request, pk):
             gasto = form.save(commit=False)
             gasto.consorcio = consorcio
             gasto.save()
-            return redirect('tienda:listar_gastos', pk=pk)
+            return redirect('tienda:listar_gastos', pk=consorcio.pk)
     else:
         form = GastosForm()
     return render(request, 'tienda/datos/gastos_form.html', {

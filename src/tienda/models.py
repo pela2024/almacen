@@ -2,16 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from tienda.models import Administracion 
+
 
 class Consorcio(models.Model):
-    clave_del_consorcio = models.CharField(max_length=255, default="valor_default")
-    domicilio = models.CharField(max_length=255)
-    localidad =models.CharField(max_length=255, default = "caba")
-    provincia = models.CharField(max_length=255, default ="Buenos Aires")
-    cuit = models.CharField(max_length=11)
+    nombre = models.CharField(max_length=255, verbose_name="Nombre del Consorcio")
+    cuit = models.CharField(max_length=11, verbose_name="CUIT", unique=True)
+    direccion = models.CharField(max_length=255, verbose_name="Dirección")
+    administracion = models.ForeignKey(
+        Administracion, 
+        on_delete=models.CASCADE, 
+        related_name="consorcios"
+    )
 
     def __str__(self):
-        return self.domicilio
+        return self.nombre
 
 
 
@@ -109,3 +114,5 @@ class Gastos(models.Model):
 
     def __str__(self):
         return f"{self.consorcio} - {self.proveedor} - {self.concepto}"
+
+
