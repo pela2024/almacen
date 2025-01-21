@@ -78,6 +78,7 @@
         <thead>
             <tr>
                 <th>rubro</th>
+                <th>Proveedor</th>
                 <th>Comprobante</th>
                 <th>Concepto</th>
                 <th>A|</th>
@@ -88,6 +89,7 @@
             {% for gasto in gastos %}
             <tr>
                 <td>{{ forloop.counter }}</td>
+                <td>{{ gasto.proveedor }}</td>
                 <td>{{ gasto.comprobante }}</td>
                 <td>{{ gasto.concepto }}</td>
                 <td>{{ gasto.a }}</td>

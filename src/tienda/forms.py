@@ -104,8 +104,9 @@ class ProveedorForm(forms.ModelForm):
 class GastosForm(forms.ModelForm):
     class Meta:
         model = Gastos
-        fields = [ 'comprobante', 'concepto', 'a', 'importe']
+        fields = [ 'proveedor','comprobante', 'concepto', 'a', 'importe']
         widgets = {
+            'proveedor': forms.Select(attrs={'class': 'form-control'}),
             'comprobante': forms.TextInput(attrs={'class': 'form-control'}),
             'concepto': forms.TextInput(attrs={'class': 'form-control'}),
             'a': forms.TextInput(attrs={'class': 'form-control'}),

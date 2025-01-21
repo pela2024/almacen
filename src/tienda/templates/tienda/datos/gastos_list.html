@@ -8,6 +8,7 @@
     <thead>
         <tr>
             <th>Comprobante</th>
+            <th>Proveedor</th>
             <th>Concepto</th>
             <th>A</th>
             <th>Importe</th>
@@ -16,6 +17,7 @@
     <tbody>
         {% for gasto in gastos %}
         <tr>
+            <td>{{ gasto.proveedor }}</td>
             <td>{{ gasto.comprobante }}</td>
             <td>{{ gasto.concepto }}</td>
             <td>{{ gasto.a }}</td>
@@ -35,6 +37,7 @@
     <thead>
         <tr>
             <th>Comprobante</th>
+            <th>Proveedor</th>
             <th>Concepto</th>
             <th>A</th>
             <th>Importe</th>
@@ -44,6 +47,7 @@
         {% for gasto in gastos %}
         <tr>
             <td>{{ gasto.comprobante }}</td>
+            <td>{{ gasto.proveedor }}</td>
             <td>{{ gasto.concepto }}</td>
             <td>{{ gasto.a }}</td>
             <td>{{ gasto.importe }}</td>

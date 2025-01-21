@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 class Consorcio(models.Model):
     clave_del_consorcio = models.CharField(max_length=255, default="valor_default")
@@ -12,7 +13,7 @@ class Consorcio(models.Model):
     def __str__(self):
         return self.domicilio
 
-from django.contrib.auth.models import AbstractUser, Group, Permission
+
 
 class Usuario(AbstractUser):
     consorcio = models.ForeignKey(
@@ -93,7 +94,8 @@ class Proveedor(models.Model):
         return f"{self.razon_social} - {self.cuit}"
 
 class Gastos(models.Model):
-    consorcio = models.ForeignKey(Consorcio, on_delete=models.CASCADE, related_name='gastos', null=True) 
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, related_name='gastos', null=True)
+    consorcio = models.ForeignKey(Consorcio, on_delete=models.CASCADE, related_name='gastos', null=True)
     comprobante = models.CharField(max_length=22)
     concepto = models.CharField(max_length=1000)
     a = models.CharField(max_length=150)
@@ -106,4 +108,4 @@ class Gastos(models.Model):
         
 
     def __str__(self):
-        return f"{self.consorcio} - {self.comprobante} - {self.concepto}"
+        return f"{self.consorcio} - {self.proveedor} - {self.concepto}"

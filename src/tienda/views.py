@@ -275,21 +275,24 @@ def generar_pdf(request):
     # Tabla de gastos
     c.drawString(50, 620, "Detalle de Gastos:")
     y = 600
-    headers = [ "Comprobante", "Concepto", "Importe"]
+    headers = ["Comprobante", "Concepto", "Importe"]
     for i, header in enumerate(headers):
-        c.drawString(50 + (i * 100), y, header)
+        c.drawString(50 + (i * 150), y, header)  # Ajustar espaciado según necesidad
     y -= 20
     
-    # Agregar datos (reemplaza con datos reales)
+    # Agregar datos reales (ejemplo de lista de gastos con proveedor incluido en concepto)
     gastos = [
-        { "comprobante": "001", "concepto": "Servicio", "importe": 1000.0},
-        { "comprobante": "002", "concepto": "Materiales", "importe": 500.0},
+        {"proveedor": "Proveedor 1", "comprobante": "001", "concepto": "Servicio", "importe": 1000.0},
+        {"proveedor": "Proveedor 2", "comprobante": "002", "concepto": "Materiales", "importe": 500.0},
     ]
     for gasto in gastos:
+        # Combinar concepto y proveedor
+        concepto_con_proveedor = f"{gasto['concepto']} ({gasto['proveedor']})"
         
-        c.drawString(150, y, gasto["comprobante"])
-        c.drawString(250, y, gasto["concepto"])
-        c.drawString(350, y, f"${gasto['importe']}")
+        # Dibujar los datos en la tabla
+        c.drawString(50, y, gasto["comprobante"])
+        c.drawString(200, y, concepto_con_proveedor)
+        c.drawString(400, y, f"${gasto['importe']}")
         y -= 20
 
     # Finalizar PDF
