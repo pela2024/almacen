@@ -1,8 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import AbstractUser, Group, Permission
-from tienda.models import Administracion 
+from django.core.validators import MinValueValidator
+
+class Administracion(models.Model):
+    razon_social = models.CharField(max_length=255, verbose_name="Razón Social")
+    cuit = models.CharField(max_length=11, verbose_name="CUIT", unique=True)
+    direccion = models.CharField(max_length=255, verbose_name="Dirección")
+    telefono = models.CharField(max_length=20, verbose_name="Teléfono", blank=True, null=True)
+    email = models.EmailField(verbose_name="Email", blank=True, null=True)
+
+    def __str__(self):
+        return self.razon_social
 
 
 class Consorcio(models.Model):
@@ -114,5 +123,3 @@ class Gastos(models.Model):
 
     def __str__(self):
         return f"{self.consorcio} - {self.proveedor} - {self.concepto}"
-
-

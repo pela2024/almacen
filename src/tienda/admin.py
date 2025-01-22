@@ -1,12 +1,11 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Liquidacion, Unidades, Consorcio, Proveedor
-
+from .models import Liquidacion, Unidades, Consorcio, Proveedor, Administracion
 
 @admin.register(Consorcio)
 class ConsorcioAdmin(admin.ModelAdmin):
-    list_display = ("clave_del_consorcio","domicilio","localidad", "provincia", "cuit",)
+    list_display = ("nombre", "cuit", "direccion")
 
 @admin.register(Unidades)
 class UnidadesAdmin(admin.ModelAdmin):
@@ -22,3 +21,7 @@ class LiquidacionAdmin(admin.ModelAdmin):
 @admin.register(Proveedor)
 class ProveedorAdmin(admin.ModelAdmin):
     list_display = ("razon_social", "cuit", "rubro", "actividad")
+
+
+
+admin.site.register(Administracion)

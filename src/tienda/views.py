@@ -10,9 +10,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import  get_object_or_404
-from .models import Proveedor, Consorcio, Gastos, Unidades 
+from .models import Proveedor, Consorcio, Gastos, Unidades, Administracion 
 from .forms import ProveedorForm, GastosForm, CustomAuthenticationForm , CustomRegistroUsuarioForm, UserProfileForm, UnidadesForm
-from .models import Administracion
 from django.template.loader import render_to_string
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -274,42 +273,54 @@ def generar_pdf(request):
     c = canvas.Canvas(response, pagesize=letter)
     c.setFont("Helvetica", 12)
 
-    # Título
-    c.drawString(100, 750, "Liquidación de Expensas")
-    
-    # Datos de la administración y el consorcio
-    c.drawString(50, 700, "Administración: Gresia")
-    c.drawString(50, 680, "Dirección: Santiago del Estero 366 piso 3 oficina 36")
-    c.drawString(50, 660, "CUIT: 20-25284237-4")
-    
-    c.drawString(300, 700, "Consorcio:")
-    c.drawString(300, 680, "Dirección: Calle Falsa 456")
-    c.drawString(300, 660, "CUIT: 33-87654321-0")
-    
-    # Tabla de gastos
-    c.drawString(50, 620, "Detalle de Gastos:")
-    y = 600
-    headers = ["Comprobante", "Concepto", "Importe"]
-    for i, header in enumerate(headers):
-        c.drawString(50 + (i * 150), y, header)  # Ajustar espaciado según necesidad
-    y -= 20
-    
-    # Agregar datos reales (ejemplo de lista de gastos con proveedor incluido en concepto)
-    gastos = [
-        {"proveedor": "Proveedor 1", "comprobante": "001", "concepto": "Servicio", "importe": 1000.0},
-        {"proveedor": "Proveedor 2", "comprobante": "002", "concepto": "Materiales", "importe": 500.0},
-    ]
-    for gasto in gastos:
-        # Combinar concepto y proveedor
-        concepto_con_proveedor = f"{gasto['concepto']} ({gasto['proveedor']})"
+    # Obtener datos de Administracion
+    try:
+        administracion = Administracion.objects.first()
+        if not administracion:
+            raise ValueError("No se encontraron datos de administración")
+
+        # Título
+        c.drawString(100, 750, "Liquidación de Expensas")
         
-        # Dibujar los datos en la tabla
-        c.drawString(50, y, gasto["comprobante"])
-        c.drawString(200, y, concepto_con_proveedor)
-        c.drawString(400, y, f"${gasto['importe']}")
+        # Datos de la administración
+        c.drawString(50, 700, f"Administración: {administracion.razon_social}")
+        c.drawString(50, 680, f"Dirección: {administracion.direccion}")
+        c.drawString(50, 660, f"CUIT: {administracion.cuit}")
+        c.drawString(50, 640, f"Teléfono: {administracion.telefono or 'N/A'}")
+        c.drawString(50, 620, f"Email: {administracion.email or 'N/A'}")
+        
+        # Resto del código de generación de PDF permanece igual
+        c.drawString(300, 700, "Consorcio:")
+        c.drawString(300, 680, "Dirección: Calle Falsa 456")
+        c.drawString(300, 660, "CUIT: 33-87654321-0")
+        
+        # Tabla de gastos
+        c.drawString(50, 580, "Detalle de Gastos:")
+        y = 560
+        headers = ["Comprobante", "Concepto", "Importe"]
+        for i, header in enumerate(headers):
+            c.drawString(50 + (i * 150), y, header)  # Ajustar espaciado según necesidad
         y -= 20
+        
+        # Agregar datos reales (ejemplo de lista de gastos con proveedor incluido en concepto)
+        gastos = [
+            {"proveedor": "Proveedor 1", "comprobante": "001", "concepto": "Servicio", "importe": 1000.0},
+            {"proveedor": "Proveedor 2", "comprobante": "002", "concepto": "Materiales", "importe": 500.0},
+        ]
+        for gasto in gastos:
+            # Combinar concepto y proveedor
+            concepto_con_proveedor = f"{gasto['concepto']} ({gasto['proveedor']})"
+            
+            # Dibujar los datos en la tabla
+            c.drawString(50, y, gasto["comprobante"])
+            c.drawString(200, y, concepto_con_proveedor)
+            c.drawString(400, y, f"${gasto['importe']}")
+            y -= 20
+
+    except Exception as e:
+        # Manejar cualquier error de recuperación de datos
+        c.drawString(50, 700, f"Error: {str(e)}")
 
     # Finalizar PDF
     c.save()
     return response
-
