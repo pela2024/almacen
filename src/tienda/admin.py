@@ -5,7 +5,7 @@ from .models import Liquidacion, Unidades, Consorcio, Proveedor, Administracion
 
 @admin.register(Consorcio)
 class ConsorcioAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "cuit", "direccion")
+    list_display = ["clave_del_consorcio", "cuit", "direccion"]
 
 @admin.register(Unidades)
 class UnidadesAdmin(admin.ModelAdmin):

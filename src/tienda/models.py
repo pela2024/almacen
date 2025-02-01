@@ -6,7 +6,7 @@ from django.core.validators import MinValueValidator
 class Administracion(models.Model):
     razon_social = models.CharField(max_length=255, verbose_name="Razón Social")
     cuit = models.CharField(max_length=11, verbose_name="CUIT", unique=True)
-    direccion = models.CharField(max_length=255, verbose_name="Dirección")
+    domicilio = models.CharField(max_length=255, verbose_name="Domicilio")
     telefono = models.CharField(max_length=20, verbose_name="Teléfono", blank=True, null=True)
     email = models.EmailField(verbose_name="Email", blank=True, null=True)
 
@@ -15,9 +15,9 @@ class Administracion(models.Model):
 
 
 class Consorcio(models.Model):
-    nombre = models.CharField(max_length=255, verbose_name="Nombre del Consorcio")
+    clave_del_consorcio = models.CharField(max_length=255, verbose_name="Clave del Consorcio")
     cuit = models.CharField(max_length=11, verbose_name="CUIT", unique=True)
-    direccion = models.CharField(max_length=255, verbose_name="Dirección")
+    domicilio = models.CharField(max_length=255, verbose_name="Domicilio")
     administracion = models.ForeignKey(
         Administracion, 
         on_delete=models.CASCADE, 
@@ -25,7 +25,7 @@ class Consorcio(models.Model):
     )
 
     def __str__(self):
-        return self.nombre
+        return self.clave_del_consorcio
 
 
 
@@ -102,6 +102,7 @@ class Proveedor(models.Model):
     cuit = models.CharField(max_length=11, unique=True)  # CUIT único
     rubro = models.CharField(max_length=100, blank=True, null=True)  # Opcional
     actividad = models.TextField(blank=True, null=True)  # Campo largo opcional
+    domicilio = models.CharField(max_length=255, verbose_name="Domicilio")  # Campo agregado
     
 
     def __str__(self):

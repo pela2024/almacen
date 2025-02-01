@@ -284,7 +284,7 @@ def generar_pdf(request):
         
         # Datos de la administración
         c.drawString(50, 700, f"Administración: {administracion.razon_social}")
-        c.drawString(50, 680, f"Dirección: {administracion.direccion}")
+        c.drawString(50, 680, f"Domicilio: {administracion.domicilio}")
         c.drawString(50, 660, f"CUIT: {administracion.cuit}")
         c.drawString(50, 640, f"Teléfono: {administracion.telefono or 'N/A'}")
         c.drawString(50, 620, f"Email: {administracion.email or 'N/A'}")
